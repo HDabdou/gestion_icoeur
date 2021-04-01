@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Mes accidents aux AVK
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content >
+  <ion-card class="welcome-card myCard" style="margin: -1px !important;padding: 0;background-color: whitesmoke;"  >
+    <ion-card-header style="background-color: #FF6347;border-bottom-left-radius: 30%;">
+    <div style="text-align: center;color: white;">
+      <span>Mes accidents aux AVK</span> 
+    </div>
+    
+  </ion-card-header>
+   <ion-card-content style="padding: 0px !important;">
+
+  
+  <div style="text-align: center;">
+    <ion-card  class="welcome-card myCard" *ngFor="let i of listeAccident" >
+      <img style="height: 20rem !important;" src="/assets/accident/{{i}}.jpeg"  alt=""/>
+     
+    </ion-card>
+  </div>
+</ion-card-content>
+</ion-card>
+
+
+</ion-content>

@@ -1,0 +1,192 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Modifications compte
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="padding: 0px !important;margin-top: 1rem;">
+  <ion-row class="container">
+  <ion-card style=" width: 100%;margin: 0;background-color: darksalmon;">
+
+    <img *ngIf="!loaded && image == null " style="border-radius: 50%; width: 77%;margin-left: 36px;padding: 11px;" class="logo img-responsive" src="/assets/avatar.png" alt="" />
+    <img *ngIf="!loaded && image != null" style="border-radius: 50%; width: 77%;margin-left: 36px;padding: 11px;" class="logo img-responsive" src="https://icoeursam.com/images/uploaded/{{image}}" alt="" />
+    <img *ngIf="loaded" style="border-radius: 50%; width: 77%;margin-left: 36px;padding: 11px;" class="logo img-responsive" [src]="imgURL" alt="" />
+    <ion-input type="file"    (change)="fileChange($event)" placeholder="Uploader Image" accept="image/*"></ion-input>
+  </ion-card>
+</ion-row>
+ <!-- <ion-row class="container">
+
+    <ion-col style=" margin: 5px;">
+    
+    <ion-item  >
+      <ion-label>Prénom </ion-label>     
+      <ion-input style="border: 1px solid #FF6347;text-align: center;margin-left: 1rem;"  type="text" value="Naby" placeholder="Prénom"></ion-input>
+   
+     </ion-item> 
+   
+  </ion-col>
+ 
+</ion-row>  
+<ion-row class="container">
+  <ion-col style=" margin: 5px;">
+  
+  <ion-item  >
+    <ion-label>Nom </ion-label>     
+    <ion-input style="border: 1px solid #FF6347;text-align: center;margin-left: 1rem;"  type="text" value="NDIAYE" placeholder="Nom"></ion-input>
+ 
+   </ion-item> 
+ 
+</ion-col>
+
+</ion-row>  
+<ion-row class="container">
+  <ion-col style=" margin: 5px;">
+  
+  <ion-item  >
+    <ion-label>Sexe </ion-label>     
+    <ion-input style="border: 1px solid #FF6347;text-align: center;margin-left: 1rem;"  type="text" value="M" placeholder="M :si masculin,F : si féminin"></ion-input>
+ 
+   </ion-item> 
+ 
+</ion-col>
+
+</ion-row>  
+<ion-row class="container">
+  <ion-col style=" margin: 5px;">
+  
+  <ion-item  >
+    <ion-label>Date Naissance </ion-label>     
+    <ion-input style="border: 1px solid #FF6347;text-align: center;margin-left: 1rem;"  type="text" value="18-06-1989" placeholder="date de naissance"></ion-input>
+ 
+   </ion-item> 
+ 
+</ion-col>
+
+</ion-row>  
+<ion-row class="container">
+  <ion-col style=" margin: 5px;">
+  
+  <ion-item  >
+    <ion-label>Origine </ion-label>     
+    <ion-input style="border: 1px solid #FF6347;text-align: center;margin-left: 1rem;"  type="text" value="Dakar" placeholder="Origine"></ion-input>
+ 
+   </ion-item> 
+ 
+</ion-col>
+
+</ion-row>  
+<ion-row class="container">
+  <ion-col style=" margin: 5px;">
+  
+  <ion-item  >
+    <ion-label>Lieu résidence </ion-label>     
+    <ion-input style="border: 1px solid #FF6347;text-align: center;margin-left: 1rem;"  type="text" value="Dakar" placeholder="Lieu résidence"></ion-input>
+ 
+   </ion-item> 
+ 
+</ion-col>
+
+</ion-row>  
+<ion-row class="container">
+  <ion-col style=" margin: 5px;">
+  
+  <ion-item  >
+    <ion-label>Téléphone 1 </ion-label>     
+    <ion-input style="border: 1px solid #FF6347;text-align: center;margin-left: 1rem;"  type="text" value="779632145" placeholder="Téléphone 1"></ion-input>
+ 
+   </ion-item> 
+ 
+</ion-col>
+
+</ion-row>  
+<ion-row class="container">
+  <ion-col style=" margin: 5px;">
+  
+  <ion-item  >
+    <ion-label>Téléphone 2 </ion-label>     
+    <ion-input style="border: 1px solid #FF6347;text-align: center;margin-left: 1rem;"  type="text" value="777332145" placeholder="Téléphone 2"></ion-input>
+ 
+   </ion-item> 
+ 
+</ion-col>
+
+</ion-row>  
+<ion-row class="container">
+  <ion-col style=" margin: 5px;">
+  
+  <ion-item  >
+    <ion-label>Profession </ion-label>     
+    <ion-input style="border: 1px solid #FF6347;text-align: center;margin-left: 1rem;"  type="text" value="Comptable" placeholder="profession"></ion-input>
+ 
+   </ion-item> 
+ 
+</ion-col>
+
+</ion-row>  
+<ion-row class="container">
+  <ion-col style=" margin: 5px;">
+  
+  <ion-item  >
+    <ion-label>Lieu exercice </ion-label>     
+    <ion-input style="border: 1px solid #FF6347;text-align: center;margin-left: 1rem;"  type="text" value="Dakar" placeholder="Lieu exercice"></ion-input>
+ 
+   </ion-item> 
+ 
+</ion-col>
+
+</ion-row>  
+<ion-row class="container">
+  <ion-col style=" margin: 5px;">
+  
+  <ion-item  >
+    <ion-label>Scolarisé </ion-label>     
+    <ion-input style="border: 1px solid #FF6347;text-align: center;margin-left: 1rem;"  type="text" value="Oui" placeholder="Oui ou Non"></ion-input>
+ 
+   </ion-item> 
+ 
+</ion-col>
+
+</ion-row>  
+<ion-row class="container">
+  <ion-col style=" margin: 5px;">
+  
+  <ion-item  >
+    <ion-label>Accompagnant </ion-label>     
+    <ion-input style="border: 1px solid #FF6347;text-align: center;margin-left: 1rem;"  type="text" value="Abdoul NDIAYE" placeholder="Accompagnant"></ion-input>
+ 
+   </ion-item> 
+ 
+</ion-col>
+
+</ion-row>  
+<ion-row class="container">
+  <ion-col style=" margin: 5px;">
+  
+  <ion-item  >
+    <ion-label>Téléphone 1 </ion-label>     
+    <ion-input style="border: 1px solid #FF6347;text-align: center;margin-left: 1rem;"  type="text" value="779854361" placeholder="Téléphone 1"></ion-input>
+ 
+   </ion-item> 
+ 
+</ion-col>
+
+</ion-row>    
+<ion-row class="container">
+  <ion-col style=" margin: 5px;">
+  
+  <ion-item  >
+    <ion-label>Téléphone 2 </ion-label>     
+    <ion-input style="border: 1px solid #FF6347;text-align: center;margin-left: 1rem;"  type="text" value="773354361" placeholder="Téléphone 2"></ion-input>
+ 
+   </ion-item> 
+ 
+</ion-col>
+
+</ion-row>  -->
+  
+</ion-content>

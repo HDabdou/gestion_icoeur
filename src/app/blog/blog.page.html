@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-back-button *ngIf="writer == 2"></ion-back-button>
+
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Blog 
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="background: #F0F8FF;">
+  <div class="mycontainer" style="margin-bottom: 5rem;">
+  <div *ngFor="let c of chatMessage">
+    <div *ngIf="c.type == 'q'" class="patient">
+    <ion-label>
+      {{c.message}}
+    </ion-label>
+    <p style="font-size: 13px;
+    float: right;
+    color: grey;
+    margin: 0 !important;padding-top: 1rem;">
+      {{displayDate(c.date)}}
+    </p>
+  </div>
+  
+  <div *ngIf="c.type == 'r'" class="medecin">
+    <ion-label>
+      {{c.message}}
+    </ion-label>
+    <p style="font-size: 13px;
+    float: right;
+    color: grey;
+    margin: 0 !important;padding-top: 1rem;">
+      {{displayDate(c.date)}}
+    </p>
+  </div>
+
+  </div>
+   
+
+  </div>
+  <div style="bottom: 0;position: fixed;background: white;width: 100%;margin: 0;padding: 0;box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);">
+    <div class="col-12 row">
+        <div class="col-10" *ngIf="writer == 3">
+          <ion-textarea  rows="2" cols="20" placeholder="Votre question ..."  [(ngModel)]="question" [ngModelOptions]="{standalone: true}" autosize></ion-textarea>
+
+        </div>
+        <div class="col-2" *ngIf="writer == 3">
+          <ion-icon *ngIf="question"  name="send" (click)="sendQuestion();"  style="font-size: 4rem;"></ion-icon>       
+        </div>
+        
+        <div class="col-10" *ngIf="writer == 2">
+          <ion-textarea  rows="2" cols="20" [(ngModel)]="response" [ngModelOptions]="{standalone: true}" placeholder="Votre reponse ..." autosize></ion-textarea>
+
+        </div>
+        <div class="col-2" *ngIf="writer == 2">
+          <ion-icon  name="send" *ngIf="response" (click)="sendResponse();" style="font-size: 4rem;"></ion-icon>       
+        </div>
+    </div>
+  </div>
+  
+</ion-content>

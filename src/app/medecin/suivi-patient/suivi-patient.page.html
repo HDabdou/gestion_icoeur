@@ -1,0 +1,500 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" style="color: white;">
+      <ion-back-button></ion-back-button>
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Suivi patient
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="padding: 0px !important;margin-top: 1rem;">
+
+
+  <ion-row *ngIf="isDone" class="container1" style="width: 100%;">
+  <ion-card style=" width: 100%;margin: 0;background-color: #008B8B;border-radius: 0;">
+    <img *ngIf="image == null" style="border-radius: 50%; width: 77%;margin-left: 36px;padding: 11px;height: 14rem;" class="logo img-responsive" src="/assets/avatar.png" alt="" />
+    <img *ngIf="image != null" style="border-radius: 50%; width: 77%;margin-left: 36px;padding: 11px;height: 14rem;" class="logo img-responsive" src="https://icoeursam.com/images/uploaded/{{image}}" alt="" />
+     
+    <ion-item *ngIf="isDone" style="min-width: 100%;text-align: center;">
+      <ion-label>{{patient.prenom}} {{patient.nom}} </ion-label>   
+      
+     </ion-item>  
+     <ion-item *ngIf="isDone" style="min-width: 100%;text-align: center;">
+       <ion-label>GSRH :{{patient.gsrh}} , AGE : {{calculateDate(patient.dateNaissance)}} ans</ion-label>   
+       
+      </ion-item> 
+      <ion-item *ngIf="isDone && voirplusprofile" style="min-width: 100%;text-align: center;">
+      <ion-label>téléphone : {{patient.tel1}} </ion-label> 
+      
+     </ion-item> 
+     <ion-item *ngIf="isDone && voirplusprofile" style="min-width: 100%;text-align: center;">
+     <ion-label>Debut suivi CTCV FANN : {{maladie.debut_suivie_ctcv_annee}} {{maladie.debut_suivie_ctcv_mois}}</ion-label> 
+     
+    </ion-item> 
+ 
+     <ion-item *ngIf="isDone && voirplusprofile" style="min-width: 100%;text-align: center;">
+      <ion-label>Origine : {{patient.origine}}</ion-label> 
+      
+     </ion-item> 
+     <ion-item *ngIf="isDone && voirplusprofile" style="min-width: 100%;text-align: center;">
+      <ion-label>Profession : {{patient.proffession}}</ion-label> 
+      
+     </ion-item> 
+     <ion-item *ngIf="isDone && voirplusprofile" style="min-width: 100%;text-align: center;">
+      <ion-label>Accompagnant : {{patient.accompagnant}},tel : {{patient.telAccompagnant1}}</ion-label> 
+      
+     </ion-item> 
+     <ion-item *ngIf="isDone && voirplusprofile" style="min-width: 100%;text-align: center;">
+      <ion-label>Cardiologue : {{patient.cardiologueReferant}}, {{patient.tel1CardiologueRef}} </ion-label> 
+      
+     </ion-item> 
+     <ion-item style="text-align: center;">
+        <img *ngIf="!voirplusprofile" (click)="voirplusprofile = true" style="width: 10%;height: 100%;margin-left: 48%;" src="/assets/chevron-down.svg" alt="">
+       <img *ngIf="voirplusprofile" (click)="voirplusprofile = false" style="width: 10%;height: 100%;margin-left: 48%;" src="/assets/chevron-up.svg" alt="">
+
+     </ion-item>
+    
+  </ion-card>
+</ion-row>
+<ion-row *ngIf="isDone" class="container1" style="width: 100%;">
+  <ion-col>
+    <ion-item >
+      <ion-button style="min-width: 100%;"  (click)="loadBlog()" color="primary">Voir discussion</ion-button>
+  </ion-item>
+  </ion-col>
+</ion-row>
+  <ion-row *ngIf="isDone" class="container" style="margin-top: 0.5rem;border: 2px solid #008B8B;">
+
+    <ion-col style=" margin: 5px;min-width: 100%;" >
+  
+    <ion-row >
+      <ion-col style="min-width: 100%;">
+      <ion-item >
+      <ion-label>Geste(s) </ion-label> 
+        
+      <img *ngIf="!voirplus" (click)="checkvoirplus('oui')" style="width: 10%;height: 100%;" src="/assets/chevron-down.svg" alt="">
+      <img *ngIf="voirplus" (click)="checkvoirplus('non')" style="width: 10%;height: 100%;" src="/assets/chevron-up.svg" alt="">
+
+      </ion-item>
+    
+    </ion-col>  
+    <ion-col *ngIf="voirplus"  style="min-width: 100%;">
+      <ion-item *ngIf="maladie.position_mital == 'OUI'" >
+        <ion-label >Position Mitrale </ion-label> 
+        <ion-label >{{maladie.type_postion_mitral}}</ion-label> 
+      </ion-item >
+      <ion-item *ngIf="maladie.position_mital == 'OUI'" >
+        <ion-label >{{maladie.fabriquant_valve_position_mitrale}} </ion-label> 
+        <ion-label >{{maladie.taille_valve_position_mitrale}}</ion-label> 
+      </ion-item >
+      <ion-item *ngIf="maladie.position_mital == 'OUI'" >
+        <ion-label >Date :</ion-label> 
+        <ion-label >{{displayDateNew(maladie.date_valve_position_mitrale)}}</ion-label> 
+      </ion-item >
+      <ion-item *ngIf="maladie.positin_aortique == 'OUI'" >
+        <ion-label>Position Aortique</ion-label> 
+        <ion-label>{{maladie.type_position_aortique}}</ion-label> 
+      </ion-item >
+      <ion-item *ngIf="maladie.positin_aortique == 'OUI'" >
+        <ion-label>{{maladie.fabriquant_position_aortique}}</ion-label> 
+        <ion-label>{{maladie.taille_position_aortique}}</ion-label> 
+      </ion-item >
+      <ion-item *ngIf="maladie.positin_aortique == 'OUI'" >
+        <ion-label>Date : </ion-label> 
+        <ion-label>{{displayDateNew(maladie.date_position_aortique)}}</ion-label> 
+      </ion-item >
+      <ion-item *ngIf="maladie.plastie_tricuspide == 'OUI'" >
+        <ion-label>Plastie tricuspide</ion-label> 
+        <ion-label>{{maladie.type_plastie_tricuspide}}</ion-label> 
+      </ion-item >
+      <ion-item *ngIf="maladie.plastie_tricuspide == 'OUI'" >
+        <ion-label>{{maladie.type_plastie_tricuspide}}</ion-label> 
+        <ion-label>{{displayDateNew(maladie.date_plastie_tricuspide)}}</ion-label> 
+      </ion-item >
+      <ion-item *ngIf="maladie.autre_gestes != ''" >
+        <ion-label>Autres gestes</ion-label> 
+      </ion-item >
+       <ion-item *ngFor="let i of listeAutregeste" style="text-align: center;" >
+        <ion-label>{{i}}</ion-label> 
+      </ion-item >
+      </ion-col>
+    </ion-row> 
+    
+     
+  </ion-col>
+ 
+</ion-row>  
+<ion-row *ngIf="isDone" class="container" style="margin-top: 0.5rem;border: 2px solid #008B8B;">
+
+  <ion-col style=" margin: 5px;min-width: 100%;" >
+
+  <ion-row >
+    <ion-col style="min-width: 100%;">
+    <ion-item >
+    <ion-label>Valvulopathie cardiaque </ion-label> 
+      
+    <img *ngIf="!voirplusValve" (click)="voirplusValve = true" style="width: 10%;height: 100%;" src="/assets/chevron-down.svg" alt="">
+    <img *ngIf="voirplusValve" (click)="voirplusValve = false" style="width: 10%;height: 100%;" src="/assets/chevron-up.svg" alt="">
+
+    </ion-item>
+  
+  </ion-col>  
+  <ion-col *ngIf="voirplusValve"  style="min-width: 100%;">
+    <ion-item  >
+      <ion-label >IM : </ion-label> 
+      <ion-label >{{maladie.im}}</ion-label> 
+    </ion-item >
+    <ion-item  >
+      <ion-label >RM : </ion-label> 
+      <ion-label >{{maladie.rm}}</ion-label> 
+    </ion-item >
+    <ion-item  >
+      <ion-label >IA : </ion-label> 
+      <ion-label >{{maladie.ia}}</ion-label> 
+    </ion-item >
+    <ion-item  >
+      <ion-label>RA : </ion-label> 
+      <ion-label>{{maladie.ra}}</ion-label> 
+    </ion-item >
+    <ion-item  >
+      <ion-label>IT : </ion-label> 
+      <ion-label>{{maladie.it}}</ion-label> 
+    </ion-item >
+    <ion-item  >
+      <ion-label>ACFA : </ion-label> 
+      <ion-label>{{maladie.acfa}}</ion-label> 
+    </ion-item >
+
+    <ion-item *ngIf="maladie.autres_affection != ''" >
+      <ion-label>Autres affections</ion-label> 
+    </ion-item >
+     <ion-item *ngFor="let i of listeAutreaffection" style="text-align: center;" >
+      <ion-label>{{i}}</ion-label> 
+    </ion-item >
+    </ion-col>
+  </ion-row> 
+  
+   
+</ion-col>
+
+</ion-row> 
+
+<ion-row *ngIf='isDone' style="border: 2px solid #008B8B;" class="container">
+    <ion-col style="background: #008B8B;" >
+    <ion-item style="text-align: center;min-width: 100%;background: #008B8B;" *ngIf="isDone">
+      <ion-label style="color: white;"><strong>INR cible  : [ min ={{maladie.inrCibleMin}} , max = {{maladie.inrCibleMax}}]</strong></ion-label>    
+    </ion-item>
+  </ion-col>
+  <ion-col  style=" margin: 5px;min-width: 100%;">
+  <ion-item  style="text-align: center;">
+      <ion-label style="color: #008B8B;"><strong>Dernier TP : {{lasttpinr.tp}} / INR : {{lasttpinr.inr}}</strong></ion-label>    
+      
+    <img *ngIf="!tpinr" (click)="checktpinr('oui')" style="width: 10%;height: 100%;" src="/assets/chevron-down.svg" alt="">
+    <img *ngIf="tpinr" (click)="checktpinr('non')" style="width: 10%;height: 100%;" src="/assets/chevron-up.svg" alt="">
+
+  </ion-item>
+  </ion-col>
+  <div style="width: 100%;">
+       
+    <ion-grid >
+      <ion-row >
+        <ion-col size="4" style="text-align: start;" >Date</ion-col>
+        <ion-col size="4" style="text-align: start;">TP</ion-col>
+        <ion-col size="4"style="text-align: start;" >INR</ion-col>
+      </ion-row> 
+      <div  *ngIf="tpinr">
+      <ion-row  *ngFor="let t of inrHistorique;let i = index" >
+        <ion-col size="4"style="text-align: start;" >{{displayDateNew(t.date_ajout)}}</ion-col>
+        <ion-col size="4" style="text-align: start;" >{{t.tp}}</ion-col>
+        <ion-col size="4" style="text-align: start;">{{t.inr}}</ion-col>
+      </ion-row>
+    </div>
+    </ion-grid>
+  </div>
+</ion-row>  
+<ion-row *ngIf="isDone" style="border: 2px solid #008B8B;" class="container">
+  <ion-col style=" margin: 5px;">
+  <ion-item style="text-align: center;">
+      <ion-label style="color: #008B8B;"><strong>Prochain TP/INR : </strong>{{displayDateNew(maladie.dateProchainTpInr)}}</ion-label>    
+      
+    <img *ngIf="!prochainTPINR" (click)="prochainTPINR = true" style="width: 10%;height: 100%;" src="/assets/chevron-down.svg" alt="">
+    <img *ngIf="prochainTPINR" (click)="prochainTPINR = false" style="width: 10%;height: 100%;" src="/assets/chevron-up.svg" alt="">
+
+  </ion-item>
+  </ion-col>
+  <ion-row  *ngIf="prochainTPINR" style=" width: 100%;"> 
+    <ion-item>
+      <ion-label>Modifier la date du prochain TP/INR</ion-label>     
+    </ion-item>       
+      <ion-item>
+        <ion-label>Date prochain TP-INR  </ion-label>     
+        <ion-input  type="date" [(ngModel)]="datePrechainTpInr" [ngModelOptions]="{standalone: true}" placeholder="INR"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="datePrechainTpInr != undefined">
+        <ion-button   size="large" (click)="presentLoading()"  color="success">Valider<ion-icon name="checkbox-outline"></ion-icon></ion-button>    
+      </ion-item>
+  </ion-row>
+</ion-row>
+
+
+  
+
+<ion-row style="border: 2px solid #008B8B;" class="container">
+  <ion-col style=" margin: 5px;">
+  <ion-item style="text-align: center;min-width: 100%;">
+      <ion-label style="color: #008B8B;"><strong>Traitement actuel</strong></ion-label>    
+  </ion-item>
+  </ion-col>
+  <ion-row  style=" width: 100%;">
+    <ion-row *ngIf="isDone" style="border: 2px solid darkred;margin: 0;" class="container">
+      <ion-col style=" min-width: 100%;">
+      <ion-item style="text-align: center;">
+          <ion-label style="color: darkred;"><strong>AVK</strong></ion-label>     
+      </ion-item>
+      </ion-col>
+      <ion-row  >
+        <ion-col>
+          <ion-item >
+            <ion-label >{{avk.nom}}</ion-label>
+         </ion-item>
+
+      </ion-col>
+      <ion-col>
+        <ion-item >
+          <ion-label>{{avk.dose}}</ion-label>
+       </ion-item>
+
+      </ion-col> 
+      <ion-col>
+        <ion-item >
+          <ion-label>{{avk.heure_prise}}</ion-label>
+      </ion-item>
+      </ion-col>
+
+      <ion-col style="min-width: 100% !important;" *ngIf="avk.photo != '' || avk.photo">
+        <ion-item >
+          <img class="logo img-responsive" src="https://icoeursam.com/images/uploaded/{{avk.photo}}" alt="" />
+      </ion-item>
+
+    </ion-col>
+    
+      <ion-col>
+        <ion-item >
+          <ion-button style="min-width: 100%;"  (click)="presentAlert(avk)" color="danger">Modifier</ion-button>
+      </ion-item>
+      </ion-col>
+        
+      <ion-item *ngIf="updateAVK == 'maintenir'">
+        <ion-label>Posologie maintenue</ion-label>
+      </ion-item>
+      <ion-item *ngIf="updateAVK == 'changer'">
+        <ion-label>Posologie</ion-label>
+        <ion-input  [(ngModel)]="doseForChange" [ngModelOptions]="{standalone: true}" placeholder="Saisissez la posologie"></ion-input>
+        <ion-icon (click)="changeDose(avk)"  name="checkbox"></ion-icon>
+      </ion-item>
+      <ion-item *ngIf="updateAVK == 'changerAVK'">
+        <ion-col>
+          <ion-label>AVK</ion-label>
+          <ion-input  [(ngModel)]="avkName" [ngModelOptions]="{standalone: true}" placeholder="Saisissez nom - dose"></ion-input>
+        </ion-col>      
+        <ion-col>
+          <ion-label>Posologie</ion-label>
+          <ion-input  [(ngModel)]="doseForChange" [ngModelOptions]="{standalone: true}" placeholder="Saisissez la dose"></ion-input>
+        </ion-col>      
+        <ion-col>
+          <ion-label>Heure prise</ion-label>
+          <ion-input  [(ngModel)]="heurePrise" [ngModelOptions]="{standalone: true}" placeholder="Saisissez la dose"></ion-input>
+        </ion-col>            
+         <ion-icon (click)="changeAVK(avk)"  name="checkbox"></ion-icon>
+      </ion-item>
+    </ion-row>
+      
+      </ion-row>   
+      <ion-row *ngIf="isDone" style="border: 2px solid #008B8B;margin-bottom: 2px;" class="container">
+        <ion-col style=" margin: 5px;">
+        <ion-item style="text-align: center;">
+            <ion-label style="color: #008B8B;"><strong>Historique AVK</strong></ion-label>    
+            
+          <img *ngIf="!checkAVK" (click)="checkSOusAVK('oui')" style="width: 10%;height: 100%;" src="/assets/chevron-down.svg" alt="">
+          <img *ngIf="checkAVK" (click)="checkSOusAVK('non')" style="width: 10%;height: 100%;" src="/assets/chevron-up.svg" alt="">
+      
+        </ion-item>
+        </ion-col>
+        <ion-row  style=" width: 100%;">        
+            <ion-grid >
+              <ion-row >
+                <ion-col size="3.5" style="text-align: start;" >Date</ion-col>
+                <ion-col size="4.3" style="text-align: start;">AVK</ion-col>
+                <ion-col size="2.5"style="text-align: start;" >Dose</ion-col>
+                <ion-col size="1.7" style="text-align: start;">INR</ion-col>
+              </ion-row> 
+              <div  *ngIf="checkAVK">
+              <ion-row  *ngFor="let t of avkHistorique;let i = index" >
+                <ion-col size="3.5"style="text-align: start;" >{{displayDateNew(t.dateCreate)}}</ion-col>
+                <ion-col size="4.3" style="text-align: start;" >{{t.nom}}</ion-col>
+                <ion-col size="2.5"style="text-align: start;" >{{t.dose}}</ion-col>
+                <ion-col size="1.7" style="text-align: start;">{{t.inr}}</ion-col>
+              </ion-row>
+            </div>
+            </ion-grid>
+      
+        </ion-row>
+      </ion-row> 
+      <ion-row *ngIf="isDone" style="border: 2px solid darkred;margin: 0;" class="container">
+        <ion-col style=" margin: 5px;min-width: 100%;">
+        <ion-item style="text-align: center;">
+            <ion-label style="color: darkred;"><strong>HEPARINE</strong></ion-label>     
+        </ion-item>
+        </ion-col>
+        <ion-row  style=" margin: 5px;">
+            <ion-col>
+              <ion-item >
+                <ion-label >{{heparine.nom}}</ion-label>
+            </ion-item>
+  
+          </ion-col>
+          <ion-col>
+            <ion-item >
+              <ion-label>{{heparine.dose}}</ion-label>
+          </ion-item>
+  
+        </ion-col> 
+        <ion-col>
+          <ion-item >
+            <ion-label>{{heparine.heure_prise}}</ion-label>
+        </ion-item>
+  
+      </ion-col>
+        <ion-col>
+          <ion-item >
+            <ion-label>du {{displayDateNew(heparine.date_debut_prise)}} au {{displayDateNew(heparine.date_fin_prise)}}</ion-label>
+        </ion-item>
+
+      </ion-col>
+      
+          <ion-col style="min-width: 100% !important;" *ngIf="heparine.photo != '' || heparine.photo">
+            <ion-item >
+              <img class="logo img-responsive" src="https://icoeursam.com/images/uploaded/{{heparine.photo}}" alt="" />
+          </ion-item>
+
+        </ion-col>
+        <ion-item style="min-width: 100%;background-color: red;text-align: center;" *ngIf="heparine.etat == 1">
+           <ion-label style="background-color: red;"><p style="color: white;">Heparine Arrêté</p></ion-label>
+        </ion-item>
+        
+        <ion-col>
+          <ion-item >
+            <ion-button style="min-width: 100%;"  (click)="presentAlert1(heparine)" color="danger">Modifier</ion-button>
+        </ion-item>
+        </ion-col>
+        <ion-item *ngIf="updateHeparine == 'maintenir'">
+          <ion-label>Posologie maintenue</ion-label>
+        </ion-item>
+        <ion-item *ngIf="updateHeparine == 'changer'">
+          <ion-label>Posologie</ion-label>
+          <ion-input  [(ngModel)]="doseForChangeHeparine" [ngModelOptions]="{standalone: true}" placeholder="Saisissez la dose"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="updateHeparine == 'changer'">
+          <ion-label>Date début</ion-label>
+          <ion-input type="date" [(ngModel)]="date_debut_h" [ngModelOptions]="{standalone: true}" placeholder="Saisissez la dose"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="updateHeparine == 'changer'">
+          <ion-label>Date Fin</ion-label>
+          <ion-input type="date" [(ngModel)]="date_fin_h" [ngModelOptions]="{standalone: true}" placeholder="Saisissez la dose"></ion-input>
+        </ion-item>
+        
+        <ion-item *ngIf="updateHeparine == 'changer'" style="text-align: center;">
+          <ion-button  (click)="changeDoseHaparine(heparine)" [disabled]="!doseForChangeHeparine || doseForChangeHeparine == ''" color="success"><ion-icon   name="checkbox"> </ion-icon>Valider </ion-button>
+        </ion-item>
+        <ion-item *ngIf="updateHeparine == 'stopHeparine'">
+          <ion-label>Vous voullez arretés l'héparine</ion-label>
+          <ion-icon (click)="stopHeparine(heparine)"  name="checkbox"></ion-icon>
+        </ion-item>
+      </ion-row>
+          
+    </ion-row>  
+    <ion-row *ngIf="isDone" style="border: 2px solid #008B8B;margin-bottom: 2px;" class="container">
+      <ion-col style=" margin: 5px;">
+      <ion-item style="text-align: center;min-width: 100%;">
+          <ion-label style="color: #008B8B;"><strong>Historique Heparine (HBPM)</strong></ion-label>    
+          
+        <img *ngIf="!Accidant" (click)="checkAccidant('oui')" style="width: 10%;height: 100%;" src="/assets/chevron-down.svg" alt="">
+        <img *ngIf="Accidant" (click)="checkAccidant('non')" style="width: 10%;height: 100%;" src="/assets/chevron-up.svg" alt="">
+      </ion-item>
+      </ion-col>
+      <ion-row  style=" width: 100%;">        
+          <ion-grid >
+            <ion-row >
+              <ion-col size="4.3" style="text-align: start;" >DATE</ion-col>
+              <ion-col size="4" style="text-align: start;">HEPARINE</ion-col>
+              <ion-col size="2"style="text-align: start;" >Dose</ion-col>
+              <ion-col size="1.7" style="text-align: start;">INR</ion-col>
+            </ion-row> 
+            <div  *ngIf="Accidant">
+            <ion-row  *ngFor="let t of heparineHistorique;let i = index" (click)="showDetail(t)" >
+              <ion-col size="4.3"style="text-align: start;" >{{displayDateNew(t.dateCreate)}}</ion-col>
+              <ion-col size="4" style="text-align: start;" >{{t.nom}}</ion-col>
+              <ion-col size="2"style="text-align: start;" >{{t.dose}}</ion-col>
+              <ion-col size="1.7" style="text-align: start;">{{t.inr}}</ion-col>
+            </ion-row>
+          </div>
+          </ion-grid>
+      </ion-row>
+    </ion-row>    
+  </ion-row>
+</ion-row> 
+
+ 
+<ion-row style="border: 2px solid #008B8B;" class="container">
+  <ion-col style="background: #008B8B;" (click)="addTraitement()">
+    <ion-item style="text-align: center;min-width: 100%;background: #008B8B;" (click)="addTraitement()">
+      <ion-label style="color: white;"><strong>Ajouter un Traitement </strong></ion-label>    
+    </ion-item>
+  </ion-col>
+  <ion-col style=" margin: 5px;">
+ 
+  <ion-item style="text-align: center;min-width: 100%;">
+      <ion-label style="color: #008B8B;"><strong>Autre(s) traitement(s)</strong></ion-label>    
+      
+    <img *ngIf="!traitement" (click)="checkAutreTraitement('oui')" style="width: 10%;height: 100%;" src="/assets/chevron-down.svg" alt="">
+    <img *ngIf="traitement" (click)="checkAutreTraitement('non')" style="width: 10%;height: 100%;" src="/assets/chevron-up.svg" alt="">
+
+  </ion-item>
+  
+  </ion-col>
+  <ion-row  style=" width: 100%;">        
+      <ion-grid >
+        <ion-row >
+          <ion-col size="3" style="text-align: start;" >Date</ion-col>
+          <ion-col size="3" style="text-align: start;">médicament</ion-col>
+          <ion-col size="3"style="text-align: start;" >DOSE</ion-col>
+          <ion-col size="3" style="text-align: start;">Posologie</ion-col>
+        </ion-row> 
+        <div  *ngIf="traitement">
+        <ion-row  *ngFor="let t of medicamentHistorique;let i = index" >
+          <ion-col size="3"style="text-align: start;" >{{displayDateNew(t.dateCreate)}}</ion-col>
+          <ion-col size="3" style="text-align: start;" >{{t.nom}}</ion-col>
+          <ion-col size="3"style="text-align: start;" >{{t.dose}}</ion-col>
+          <ion-col size="3" style="text-align: start;">{{t.posologie}}</ion-col>
+        </ion-row>
+      </div>
+      </ion-grid>
+
+  </ion-row>
+</ion-row>  
+<ion-row style="border: 2px solid #008B8B;" class="container">
+  <ion-col style=" margin: 5px;min-width: 100%;">
+  <ion-item style="text-align: center;">
+      <ion-label style="color: #008B8B;"><strong>Courbe INR</strong></ion-label>    
+    
+  </ion-item>
+  </ion-col>
+
+  <div style="min-width: 100%;">
+    <canvas  #barChart></canvas>
+  </div>
+</ion-row>  
+</ion-content>

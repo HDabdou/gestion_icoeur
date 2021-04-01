@@ -1,0 +1,85 @@
+
+
+<ion-content>
+  <ion-card class="welcome-card " *ngIf="etapDisplay == 2" style="background-color: #1E90FF;height: 100%;margin: 0"   >
+    <ion-card-header style="
+    background-color: white;
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;" >
+      <ion-card-title style="color: darkgreen;text-align: center;font-size: 2rem;">Modification mot de passe</ion-card-title>
+    </ion-card-header>  
+    <ion-card-content style="
+    background-color: white;
+    /* border-radius: 5%; */
+    border-bottom-left-radius: 5%;
+    border-bottom-right-radius: 5%;">
+
+      <ion-item *ngIf="errorMessage == -1" style="background-color: #ebcccc;;">
+        <ion-icon name="close-circle-outline" style="font-size: 45px;color:#a94442"></ion-icon><p style="color:#a94442;font-size: 18px;">Error : Échec d'authentification !!!</p>
+      </ion-item>
+     
+      <ion-item >
+       <ion-input style="color: darkgreen;font-size: 1.5rem;text-align: center;" type="password" [(ngModel)]="newPassword" [ngModelOptions]="{standalone: true}" placeholder="Nouveau Mot de passe"></ion-input>
+     </ion-item>
+     <ion-item >
+      <ion-input style="color: darkgreen;font-size: 1.5rem;text-align: center;" type="password" [(ngModel)]="confirmNewPassword" [ngModelOptions]="{standalone: true}" placeholder="Confirmer Mot de passe"></ion-input>
+    </ion-item>
+
+      <div style="text-align: center !important;margin-top: 1rem;">
+        <ion-button  type="submit" (click)="valider()" color="success">Valider</ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  
+  <ion-card class="welcome-card " *ngIf="etapDisplay == 1" style="min-height: 100%;margin: 0"   >
+    <ion-card-header style="
+    background-color: white;
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;" >
+      <ion-card-title style="color: darkgreen;text-align: center;font-size: 1.5rem;">Consentement PATIENT</ion-card-title>
+    </ion-card-header>  
+    <ion-card-content >
+      <!--<img class="logo img-responsive" src="/assets/Consentement_i-coeur_.jpeg" alt="" />-->
+      <div >
+          <div style="border-radius: 11px;background: white;width: 100%;margin-top: 1rem;padding: 9px;">
+            <b> <i>i-cœur’</i></b> est une application mobile pour la «Télésurveillance» des patients sous Anti
+            Vitamine-K (AVK) permettant de faciliter la connexion entre les patients sous AVK au long cours et le
+            personnel médical. Elle est simple d’utilisation, limite les déplacements des patients tout en leur
+            permettant d’avoir des informations utiles à leur traitement. A cause des nombreuses complications
+            (thrombo-emboliques) que ce traitement engendre, les patients sont soumis à une surveillance
+            rigoureuse clinique (guetter les signes de thrombose et d’hémorragie) et biologique (dosage sanguin
+            du TP (Taux de Prothrombine et de l’INR (International Normalized Ratio) au moins 2 fois par mois).
+            Cette application est destinée à rassembler des données indispensables au suivi de votre traitement
+            notamment les résultats de vos examens de laboratoire (INR) et à répondre à des questions pratiques :
+            mieux comprendre votre traitement par AVK, comment le prendre, les règles pour bien suivre votre
+            traitement, les interactions alimentaires et médicamenteuses, les risques d’un traitement par AVK...
+            Elle permet aussi de mieux informer les professionnels de santé qui vous suivent.
+            Le corps médical étant soumis au secret médical et au respect absolu du code d’éthique et de
+            déontologie, il est primordial pour nous de protéger les données personnels des patients. C’est
+            pourquoi nous nous sommes soumis aux règles établies par l’État du Sénégal (Demande d’agrément
+            auprès du Ministère de la Santé et de l’Action Sociale (MSAS) et Demande d’autorisation auprès de la
+            Commission de protection des Données Personnelles (CDP)).
+            Vos informations (médicales) peuvent être utilisées à des fins scientifiques, en ne divulguant jamais
+            vos informations personnelles d’Etat Civil, comme cela se fait couramment en milieu Hospitalier.
+            L’application est (non obligatoire) proposée aux patients qui le désirent avec la possibilité d’arrêter son
+            utilisation à tout moment (après une simple information du médecin qui s’occupe de votre suivi).
+            En accédant à l’application vous acceptez de manière claire et consentie les conditions d’utilisations.
+            <div style="text-align: right;">
+              <span style="margin-top: 1rem;"><p style="text-decoration: underline;font-size: 1.2rem;">SenAssistanceMedical</p> Dakar le 4 Mars 2021 </span>
+
+            </div>
+          </div>
+      </div>
+
+     
+
+      <div style="text-align: center !important;margin-top: 1rem;padding: 5px;background: white;">
+        <div>
+          <input type="checkbox" (click)="approuved()" id="vehicle1" name="vehicle1" value="Bike">
+          <label for="vehicle1"> lu et approuvé</label>
+        </div>
+        <ion-button  type="submit" [disabled]="!itemChecked" (click)="etapDisplay = 2" color="success">Valider</ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

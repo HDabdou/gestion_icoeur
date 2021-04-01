@@ -1,0 +1,283 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Mon compte 
+      <img  style="width: 10%;height: 100%;float: right;" src="/assets/iconModif.png" alt="">
+    </ion-title>
+   
+    
+
+    
+  </ion-toolbar>
+</ion-header>
+<ion-content >
+  
+  <ion-card class="welcome-card myCard" style="margin: -1px !important;padding: 0;margin-bottom: 2rem !important;"  >
+    <ion-card-header style="background-color: #FF6347;border-bottom-left-radius: 30%;">
+    <div style="text-align: center;color: white;">
+      <span *ngIf="data.sexe == 'm'">Mr</span><span *ngIf="data.sexe == 'f'">Mme</span><span>{{data.nom}}</span><span>{{data.prenom}}</span> <span>{{calculateDate(data.dateNaissance)}} ans</span> <span>{{displayGRHS(data.gsrh)}},</span><span *ngIf="currentMaladie != undefined" > {{currentMaladie.numero_dossier}}</span> 
+    </div>
+    <div style="text-align: center;color: white;">
+      <span style="font-size: 20px;font-style: italic;">Cardiologue : </span><span style="font-size: 20px;font-style: italic;">{{data.cardiologueReferant}}</span> 
+    </div>
+  </ion-card-header>
+   <ion-card-content style="padding: 0px !important;">
+
+  
+  <div style="text-align: center;">
+    <ion-grid>
+      <ion-row *ngIf="isRDV">
+        <ion-col style="min-width: 100% !important;background: darkgreen;" *ngIf="getNotiffiactionRDVC(lastRDV)">
+          <ion-item >
+            <ion-label> RDV Cardiologie le : {{displayDate(lastRDV)}} - {{heureRDVC}}</ion-label>
+        </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="isRDV && isMaladie">
+        <ion-col style="min-width: 100% !important;background: darkgreen;" *ngIf="getNotiffiactionRDVCh(lastChirurgie)">
+          <ion-item >
+            <ion-label> RDV Chirurgie le : {{displayDate(lastChirurgie)}} - {{heureCHI}}</ion-label>
+        </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="isAVK" style="border: 2px solid darkred;margin: 0;" class="container">
+        <ion-col style=" margin: 5px;min-width: 100%;">
+        <ion-item style="text-align: center;">
+            <ion-label style="color: darkred;"><strong>AVK</strong></ion-label>     
+        </ion-item>
+        </ion-col>
+        <ion-row  style=" margin: 5px;">
+          <ion-col>
+            <ion-item >
+              <ion-label >{{currentAVK.nom}}</ion-label>
+           </ion-item>
+
+        </ion-col>
+        <ion-col>
+          <ion-item >
+            <ion-label>{{currentAVK.dose}}</ion-label>
+         </ion-item>
+
+        </ion-col> 
+        <ion-col>
+          <ion-item >
+            <ion-label>{{currentAVK.heure_prise}}</ion-label>
+        </ion-item>
+        </ion-col>
+        <ion-col style="min-width: 100% !important;background: crimson;" *ngIf="currentAVK.lastUpdate != null && getNotiffiaction(currentAVK.lastUpdate)">
+          <ion-item >
+            <ion-label> Modifier le : {{currentAVK.lastUpdate}}</ion-label>
+        </ion-item>
+        </ion-col>
+        <ion-col style="min-width: 100% !important;" *ngIf="currentAVK.photo != '' || currentAVK.photo">
+          <ion-item >
+            <img class="logo img-responsive" src="https://icoeursam.com/images/uploaded/{{currentAVK.photo}}" alt="" />
+        </ion-item>
+
+      </ion-col>
+        </ion-row>
+        
+        </ion-row>
+         <ion-row *ngIf="isHeparine && currentHeparine.etat == 1" style="border: 2px solid darkred;margin: 0;" class="container">
+          <ion-col style=" margin: 5px;min-width: 100%;">
+          <ion-item style="text-align: center;">
+              <ion-label style="color: darkred;"><strong>HEPARINE</strong></ion-label>     
+          </ion-item>
+          </ion-col>
+          <ion-row  style=" margin: 5px;">
+              <ion-col>
+                <ion-item >
+                  <ion-label >{{currentHeparine.nom}}</ion-label>
+              </ion-item>
+    
+            </ion-col>
+            <ion-col>
+              <ion-item >
+                <ion-label>{{currentHeparine.dose}}</ion-label>
+            </ion-item>
+    
+          </ion-col> 
+          <ion-col>
+            <ion-item >
+              <ion-label>{{currentHeparine.heure_prise}}</ion-label>
+          </ion-item>
+    
+        </ion-col>
+        <ion-col>
+          <ion-item >
+            <ion-label>du {{displayDate(currentHeparine.date_debut_prise)}} au {{displayDate(currentHeparine.date_fin_prise)}}</ion-label>
+        </ion-item>
+  
+      </ion-col>
+      
+      <ion-col style="min-width: 100% !important;background: crimson;"  *ngIf="getNotiffiaction1(currentHeparine.dateUpdate)">
+        <ion-item >
+          <ion-label> Modifier le : {{currentHeparine.dateUpdate}}</ion-label>
+      </ion-item>
+      </ion-col>
+          <ion-col style="min-width: 100% !important;" *ngIf="currentHeparine.photo != '' || currentHeparine.photo">
+            <ion-item >
+              <img class="logo img-responsive" src="https://icoeursam.com/images/uploaded/{{currentHeparine.photo}}" alt="" />
+          </ion-item>
+
+        </ion-col>
+      </ion-row>
+          
+          </ion-row>
+
+          <ion-row *ngIf="isMaladie" class="container">
+            <ion-col style=" margin: 5px;">
+            <ion-item style="text-align: center;" *ngIf="isTpinr">
+                <ion-label style="color: #FF6347;"><strong>Dernier TP-INR  {{displayDate(lastTpinr.date_ajout)}}</strong></ion-label>     
+            </ion-item>
+            </ion-col>
+            <ion-row  style=" margin: 5px;min-width: 100%;">
+              <ion-col *ngIf="isTpinr">
+                <ion-item  >
+                 <ion-label>TP : {{lastTpinr.tp}} </ion-label>
+               </ion-item>
+    
+            </ion-col>
+            <ion-col *ngIf="isTpinr">
+              <ion-item style="text-align: center;" [ngStyle]="{'color':currentMaladie.inrCibleMin >lastTpinr.inr || currentMaladie.inrCibleMax < lastTpinr.inr ? 'white' : 'black' }" >
+                <ion-label [ngStyle]="{'background-color':currentMaladie.inrCibleMin >lastTpinr.inr || currentMaladie.inrCibleMax < lastTpinr.inr ? 'red' : 'white' }">INR : {{lastTpinr.inr}}</ion-label>
+
+             </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item style="text-align: center;">
+                <ion-label>INR Cible: [{{currentMaladie.inrCibleMin}} - {{currentMaladie.inrCibleMax}}]</ion-label>
+
+             </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+        
+        <ion-row class="container">
+          <ion-col *ngIf="isMaladie" style=" margin: 5px;">
+            <ion-item style="text-align: center;">
+                <ion-label style="color: darkgreen;"><strong>Prochain TP-INR: {{displayDate(currentMaladie.dateProchainTpInr)}}</strong></ion-label>     
+            </ion-item>
+            </ion-col>
+           
+        
+        </ion-row>
+        <ion-row *ngIf="isRDV" class="container">
+          <ion-col style=" margin: 5px;">
+            <ion-item style="text-align: center;">
+                <ion-label style="color: darkgreen;"><strong>Prochain RDV Cardiologie : {{displayDate(lastRDV)}}</strong></ion-label>     
+            </ion-item>
+            </ion-col>
+           
+        
+        </ion-row>
+        <ion-row *ngIf="isRDV" class="container">
+          <ion-col style=" margin: 5px;">
+            <ion-item style="text-align: center;">
+                <ion-label style="color: darkgreen;"><strong>Prochain RDV Chirurgie: {{displayDate(lastChirurgie)}}</strong></ion-label>     
+            </ion-item>
+            </ion-col>
+           
+        
+        </ion-row>
+
+        <ion-row class="container">
+          <ion-col style=" margin: 5px;">
+            <ion-item style="text-align: center;">
+                <ion-label style="color: #FF6347;"><strong>N° garde cardio de FANN : 774879519</strong></ion-label>     
+            </ion-item>
+            </ion-col><ion-col style=" margin: 5px;">
+              <ion-item style="text-align: center;">
+                  <ion-label style="color: #FF6347;"><strong>N° garde CTCV de FANN : 774879517</strong></ion-label>     
+              </ion-item>
+              </ion-col>
+        
+        </ion-row>
+
+      
+        <ion-row *ngIf="isMaladie" style="border: 2px solid darkred;" class="container">
+          <ion-col style=" margin: 5px;min-width: 100%;">
+          <ion-item style="text-align: center;">
+              <ion-label style="color: #FF6347;"><strong>GESTE(S)</strong></ion-label>     
+          </ion-item>
+          </ion-col>
+          <ion-row *ngIf="currentMaladie.position_mital == 'OUI'" style=" margin: 5px;width: 100%;">
+            <ion-col style="width: 100%;">
+              <ion-item style="width: 100%;">
+                <h3 >Position mitrale</h3><h3  style="margin-left: 8px;">{{currentMaladie.type_postion_mitral}}</h3>
+                
+             </ion-item>
+             <ion-item style="width: 100%;" >
+               
+               <p>{{currentMaladie.fabriquant_valve_position_mitrale}}</p><p style="margin-left: 8px;">taille : {{currentMaladie.taille_valve_position_mitrale}}</p><p style="margin-left: 8px;">{{displayDate(currentMaladie.date_valve_position_mitrale)}}</p>
+            </ion-item>
+  
+          </ion-col>
+         
+          </ion-row>
+          <ion-row *ngIf="currentMaladie.positin_aortique == 'OUI'" style=" margin: 5px;width: 100%;">
+            <ion-col style="width: 100%;">
+              <ion-item style="width: 100%;">
+                <h3 >Position Aortique</h3><h3  style="margin-left: 8px;">{{currentMaladie.type_position_aortique}}</h3>
+                
+             </ion-item>
+             <ion-item style="width: 100%;" >
+               
+               <p>{{currentMaladie.fabriquant_position_aortique}}</p><p style="margin-left: 8px;">taille : {{currentMaladie.taille_position_aortique}}</p><p style="margin-left: 8px;">{{displayDate(currentMaladie.date_position_aortique)}}</p>
+            </ion-item>
+  
+          </ion-col>
+         
+          </ion-row>
+          <ion-row *ngIf="currentMaladie.plastie_tricuspide == 'OUI'" style=" margin: 5px;width: 100%;">
+            <ion-col style="width: 100%;">
+              <ion-item style="width: 100%;">
+                <h3 >Plastie tricuspide</h3>
+                
+             </ion-item>
+             <ion-item style="width: 100%;" >
+               
+               <p>{{currentMaladie.type_plastie_tricuspide}}</p><p style="margin-left: 8px;">{{displayDate(currentMaladie.date_plastie_tricuspide)}}</p>
+            </ion-item>
+  
+          </ion-col>
+         
+          </ion-row>
+          <ion-row  style=" margin: 5px;width: 100%;">
+            <ion-col style="width: 100%;">
+              <ion-item *ngFor="let i of autreGestes" style="width: 100%;">
+                <h3 >{{i}}</h3>
+                
+             </ion-item>
+  
+          </ion-col>
+         
+          </ion-row>
+          
+        </ion-row>
+        <ion-row *ngIf="isMaladie" class="container">
+          <ion-col style=" margin: 5px;">
+          <ion-item style="text-align: center;" *ngIf="isTpinr">
+              <ion-label style="color: #FF6347;"><strong>Autres affections</strong></ion-label>     
+          </ion-item>
+          </ion-col>
+          <ion-row  style=" margin: 5px;min-width: 100%;">
+         
+          <ion-col>
+            <ion-item *ngFor="let i of autres_affection" style="width: 100%;">
+              <h3 >{{i}}</h3>
+           </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+     
+   </ion-grid>
+  </div>
+</ion-card-content>
+</ion-card>
+
+
+</ion-content>

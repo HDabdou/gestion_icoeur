@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Education thérapeutique
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content >
+  <ion-card class="welcome-card myCard" style="margin: -1px !important;padding: 0;background-color: whitesmoke;"  >
+    <ion-card-header style="background-color: #FF6347;border-bottom-left-radius: 30%;">
+    <div style="text-align: center;color: white;">
+      <span>Education thérapeutique</span> 
+    </div>
+    
+  </ion-card-header>
+   <ion-card-content style="padding: 0px !important;">
+
+  
+  <div style="text-align: center;">
+    <ion-grid>
+      <ion-row class="container">
+        <ion-col style=" margin: 5px;">
+        <ion-item style=" margin: 5px;">
+          <ion-label>Information</ion-label> 
+          <img *ngIf="!checkAVK" (click)="checkSOusAVK('oui')" style="width: 10%;height: 100%;" src="/assets/chevron-down.svg" alt="">
+          <img *ngIf="checkAVK" (click)="checkSOusAVK('non')" style="width: 10%;height: 100%;" src="/assets/chevron-up.svg" alt="">
+     
+        </ion-item>
+        <ion-row *ngIf="checkAVK">
+          <ion-card  class="welcome-card myCard" *ngFor="let i of listeInformation" >
+            <img style="height: 20rem !important;" src="/assets/infoAVK/{{i}}.jpeg"  alt=""/>
+           
+          </ion-card>
+        </ion-row>
+      
+      </ion-col>
+     
+    </ion-row>  
+
+      <ion-row class="container">
+        <ion-col style=" margin: 5px;">
+        <ion-item style=" margin: 5px;"> 
+          <ion-label>Alimentations</ion-label> 
+          <img *ngIf="!Accidant" (click)="checkAccidant('oui')" style="width: 10%;height: 100%;" src="/assets/chevron-down.svg" alt="">
+          <img *ngIf="Accidant" (click)="checkAccidant('non')" style="width: 10%;height: 100%;" src="/assets/chevron-up.svg" alt="">
+    
+        </ion-item>
+        <ion-row *ngIf="Accidant">
+          <ion-card  class="welcome-card myCard"  >
+            <img style="height: 20rem !important;" src="/assets/interAlimentaire.jpeg"  alt=""/>
+           
+          </ion-card>
+        </ion-row>
+
+
+      </ion-col>
+    
+    </ion-row>      
+    <ion-row class="container">
+      <ion-col style=" margin: 5px;">
+      <ion-item style=" margin: 5px;">
+        <ion-label>Interactions médicamenteuses</ion-label> 
+        <img *ngIf="!autresCheck" (click)="checkAutre('oui')" style="width: 10%;height: 100%;" src="/assets/chevron-down.svg" alt="">
+        <img *ngIf="autresCheck" (click)="checkAutre('non')" style="width: 10%;height: 100%;" src="/assets/chevron-up.svg" alt="">
+   
+      </ion-item>
+      
+      <ion-row *ngIf="autresCheck">
+        <ion-card  class="welcome-card myCard"  >
+          <img style="height: 20rem !important;" src="/assets/interMedicamenteuses.jpeg"  alt=""/>
+         
+        </ion-card>
+      </ion-row>
+   
+
+    </ion-col>
+   
+  </ion-row>  
+   </ion-grid>
+  </div>
+</ion-card-content>
+</ion-card>
+
+
+</ion-content>

@@ -1,0 +1,103 @@
+.welcome-card img {
+    max-height: 35vh;
+    overflow: hidden;
+  }
+  .myCard {
+    //max-height:32% !important ;
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+    border-radius: 8px !important;
+    -webkit-margin-start:6px !important;
+    -webkit-margin-end:5px !important
+  }
+  span{
+    font-size: 1.5rem;
+    margin: 5px;
+  }
+  .rowHome{
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+    margin: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: white;
+  }
+  ion-toolbar{
+    --background: url("../../assets/topBar.JPG") ;
+    --color : white ;
+    --box-shadow:0 !important;
+  }
+  .container{
+    margin: 5px;
+   // padding-top: 1rem;
+    //padding-bottom: 1rem;
+  background: #fff;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  }
+  .nous{
+    font-family: Fontil Sans, monospace;
+    text-align: left;
+    width: 50%;
+    float: left;
+    /*margin-top: 6rem;*/
+    background-color: whitesmoke;
+     border-bottom-left-radius: 10px;
+  }
+  .nous1{
+    font-family: Fontil Sans, monospace;
+    text-align: left;
+    width: 90%;
+    float: left;
+    /*margin-top: 6rem;*/
+    background-color: whitesmoke;
+     border-bottom-left-radius: 10px;
+  }
+  .nous1 textarea{
+    height: 100px !important;
+  }
+  .client{
+    text-align: left;
+    width: 50%;
+    float: right;
+    background-color: #90EE90;
+    color: black;
+    border-bottom-right-radius: 10px;
+
+   /* margin-top: 3rem;*/
+}
+.mycontainer{
+  font-family: Fontil Sans, monospace;
+  text-align: left;
+   width: 100%; 
+  float: left;
+  /*margin-top: 6rem;*/
+  background: #F0F8FF;
+  border-bottom-left-radius: 10px;
+  padding: 5px;
+  /* box-shadow: 0 1px 15px 0 rgba(123, 123, 123, 0.05); */
+  /* margin: 5px; */
+  min-height: 100%;
+}
+.patient{
+  font-family: Fontil Sans, monospace;
+    text-align: left;
+    float: left;
+    /*margin-top: 6rem;*/
+    background: #F5F5DC;
+    border-radius: 1rem;
+    padding: 5px;
+    box-shadow: 2 2px 16px 1 rgba(123, 123, 123, 0.05);
+    width: 90%;
+    margin-top: 0.5rem;
+}
+.medecin{
+  font-family: Fontil Sans, monospace;
+    text-align: left;
+    float: right;
+    /*margin-top: 6rem;*/
+    background:#FFA07A;
+    border-radius: 1rem;
+    padding: 5px;
+    box-shadow: 2 2px 16px 1 rgba(123, 123, 123, 0.05);
+    width: 90%;
+    margin-top: 0.5rem;
+}

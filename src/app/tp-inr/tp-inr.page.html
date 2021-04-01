@@ -1,0 +1,114 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Mes TP-INR
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content >
+  <ion-card class="welcome-card myCard" style="margin: -1px !important;padding: 0;background-color: whitesmoke;"  >
+    <ion-card-header style="background-color: #FF6347;border-bottom-left-radius: 30%;">
+    <div style="text-align: center;color: white;">
+      <span>Surveillance AVK</span> 
+    </div>
+    
+  </ion-card-header>
+   <ion-card-content style="padding: 0px !important;">
+
+  
+  <div style="text-align: center;">
+    <ion-grid>
+      <ion-row class="container">
+        <ion-col style=" margin: 5px;">
+        
+        <ion-item  >
+          <ion-label>TP </ion-label>     
+          <ion-input  type="text" [(ngModel)]="tp" [ngModelOptions]="{standalone: true}" placeholder="TP"></ion-input>
+       
+         </ion-item> 
+       
+      </ion-col>
+     
+    </ion-row>  
+    <ion-row class="container">
+      <ion-col style=" margin: 5px;">
+      
+      <ion-item  >
+        <ion-label>INR </ion-label>     
+        <ion-input  type="text" [(ngModel)]="inr" [ngModelOptions]="{standalone: true}" placeholder="INR"></ion-input>
+     
+       </ion-item> 
+     
+    </ion-col>
+   
+  </ion-row>   
+  <!--<ion-row class="container">
+    <ion-col style=" margin: 5px;">
+    
+    <ion-item  >
+      <ion-label>Date prochain TP-INR  </ion-label>     
+      <ion-input  type="date" [(ngModel)]="datePrechainTpInr" [ngModelOptions]="{standalone: true}" placeholder="INR"></ion-input>
+   
+     </ion-item> 
+   
+  </ion-col>
+ 
+</ion-row> --> 
+<ion-row *ngIf="tp != undefined && inr != undefined " class="container">
+  <ion-col style=" margin: 5px; text-align: center;">
+  
+  <ion-item  >
+    <ion-button  style="width: 48%;" size="large" (click)="presentLoading()"  color="success">Valider<ion-icon name="checkbox-outline"></ion-icon></ion-button>    
+
+   </ion-item> 
+ 
+</ion-col>
+
+</ion-row>  
+
+   </ion-grid>
+  
+   
+  </div>
+</ion-card-content>
+<div class="container">
+  <canvas #barChart></canvas>
+  <ion-row *ngIf="isMaladie">
+    <ion-col>
+      <ion-label>INR Min : {{maladie.inrCibleMin}}</ion-label>
+    </ion-col>
+    <ion-col>
+      <ion-label>INR Max : {{maladie.inrCibleMax}}</ion-label>
+    </ion-col>
+  </ion-row>
+  <ion-item style="text-align: center;">
+    <ion-label style="color: #FF6347;"><strong>Listes des TP-INR</strong></ion-label>    
+    
+  <img *ngIf="!listeDisplay" (click)="dislplayListe('oui')" style="width: 10%;height: 100%;" src="/assets/chevron-down.svg" alt="">
+  <img *ngIf="listeDisplay" (click)="dislplayListe('non')" style="width: 10%;height: 100%;" src="/assets/chevron-up.svg" alt="">
+
+</ion-item>
+  <ion-grid >
+    
+    <ion-row *ngIf="listeDisplay">
+      <ion-col size="4" style="text-align: start;" >Date</ion-col>
+      <ion-col size="4" style="text-align: start;">TP</ion-col>
+      <ion-col size="4" style="text-align: start;">INR</ion-col>
+    </ion-row> 
+    <div *ngIf="listeDisplay">
+    <ion-row  *ngFor="let t of inrHistorique">
+      <ion-col size="4"style="text-align: start;" >{{displayDate(t.date_ajout)}}</ion-col>
+      <ion-col size="4" style="text-align: start;" >{{t.tp}}</ion-col>
+      <ion-col size="4" style="text-align: start;"><p [ngStyle]="{'background-color':maladie.inrCibleMin > t.inr || maladie.inrCibleMax < t.inr ? 'red' : 'white' }">{{t.inr}}</p></ion-col>
+    </ion-row>
+  </div>
+  </ion-grid>
+ </div>
+
+</ion-card>
+
+
+</ion-content>

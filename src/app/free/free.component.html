@@ -1,0 +1,110 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+        Mes RDV
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content >
+    <ion-card class="welcome-card myCard" style="margin: -1px !important;padding: 0;margin-bottom: 2rem !important;"  >
+      <ion-card-header style="background-color: #FF6347;border-bottom-left-radius: 30%;">
+      <div style="text-align: center;color: white;">
+      </div>
+    
+    </ion-card-header>
+     <ion-card-content style="padding: 0px !important;">
+  
+    
+    <div style="text-align: center;">
+      <ion-grid>
+        <ion-row class="container">
+          <ion-col style=" margin: 5px;">
+          <ion-item style=" margin: 5px;">
+            <ion-label>Cardiologie</ion-label>     
+          </ion-item>
+           <ion-item  >
+             <ion-label>Date</ion-label>     
+             <ion-input type="date" [(ngModel)]="dateRDV" [ngModelOptions]="{standalone: true}" placeholder="service"></ion-input>
+     
+            </ion-item> 
+            <ion-item  >
+              <ion-label>Heure </ion-label>     
+              <ion-select placeholder="heure" [(ngModel)]="heurRDV" [ngModelOptions]="{standalone: true}">
+                <ion-select-option value="Matin">Matin</ion-select-option>
+                <ion-select-option value="aprés-midi">aprés-midi</ion-select-option>
+              </ion-select>
+            </ion-item> 
+              <ion-item *ngIf="dateRDV  && heurRDV "  >
+                <ion-button  style="width: 48%;" size="large" (click)="presentLoading('Cardiologie')"  color="success">Valider<ion-icon name="checkbox-outline"></ion-icon></ion-button>             
+           </ion-item> 
+   
+        </ion-col>
+       
+      </ion-row>  
+      <ion-row class="container">
+        <ion-col style=" margin: 5px;">
+        <ion-item style=" margin: 5px;">
+          <ion-label>service de chirurgie thoracique et cardio-vasculaire</ion-label>     
+        </ion-item>
+
+         <ion-item  >
+           <ion-label>Date</ion-label>     
+           <ion-input type="date" [(ngModel)]="datechirurgie" [ngModelOptions]="{standalone: true}" placeholder="service"></ion-input>
+   
+          </ion-item> 
+          <ion-item  >
+            <ion-label>Heure </ion-label>     
+            <ion-select placeholder="heure" [(ngModel)]="heurchirurgie" [ngModelOptions]="{standalone: true}">
+              <ion-select-option value="Matin">Matin</ion-select-option>
+              <ion-select-option value="aprés-midi">aprés-midi</ion-select-option>
+            </ion-select>            
+           </ion-item> 
+           <ion-item  *ngIf="datechirurgie && heurchirurgie ">
+            <ion-button  style="width: 48%;" size="large" (click)="presentLoading('Chirurgie')"  color="success">Valider<ion-icon name="checkbox-outline"></ion-icon></ion-button>                      
+            </ion-item> 
+ 
+      </ion-col>
+     
+    </ion-row>  
+     </ion-grid>
+    </div>
+    <ion-grid>
+      <ion-row style="border: 2px solid #FF6347;" class="container">
+        <ion-col style=" margin: 5px;">
+        <ion-item style="text-align: center;">
+            <ion-label style="color: #FF6347;"><strong>Liste des RDV</strong></ion-label>    
+            
+            <img *ngIf="!rdv" (click)="checkSOusAVK('oui')" style="width: 10%;height: 100%;" src="/assets/chevron-down.svg" alt="">
+          <img *ngIf="rdv" (click)="checkSOusAVK('non')" style="width: 10%;height: 100%;" src="/assets/chevron-up.svg" alt="">
+      
+        </ion-item>
+        </ion-col>
+        <ion-row  style=" width: 100%;">        
+            <ion-grid >
+              <ion-row >
+                <ion-col size="4" style="text-align: start;" >Date</ion-col>
+                <ion-col size="4" style="text-align: start;">Service</ion-col>
+                <ion-col size="4"style="text-align: start;" >Heure</ion-col>
+              </ion-row> 
+              <div  *ngIf="rdv">
+              <ion-row  *ngFor="let t of listRDV;let i = index">
+                <ion-col size="4"style="text-align: start;" >{{displayDate(t.date)}}</ion-col>
+                <ion-col size="4" style="text-align: start;" >{{t.service}}</ion-col>
+                <ion-col size="4"style="text-align: start;" >{{t.heure}}</ion-col>
+              </ion-row>
+            </div>
+            </ion-grid>
+
+        </ion-row>
+
+      </ion-row>   
+   </ion-grid>
+  </ion-card-content>
+  </ion-card>
+  
+  
+  </ion-content>
+  

@@ -1,0 +1,845 @@
+
+<!--  <ion-card class="welcome-card" style="max-height:250px ;">
+    <img src="/assets/orange1.png"  alt=""/>
+    
+  </ion-card>
+  <ion-card class="welcome-card" >
+    <img src="/assets/free.png" style="max-height:200px ;" alt=""/>
+   
+  </ion-card>
+  <ion-card class="welcome-card">
+    <img src="/assets/expresso.jpg" style="max-height:200px ;" alt=""/>
+    
+  </ion-card>-->
+<ion-content>
+  <ion-card *ngIf="etatpeInscription == 1 || etatpeInscription == 0" class="welcome-card" style="padding: 0 !important;margin: 0 !important;">
+    <ion-card-header style="background-color: #3171e0;">
+      <ion-card-title style="text-align: center !important;color: white;">Nouvelle souscription</ion-card-title>
+    </ion-card-header>
+    <ion-card-content style="margin-bottom: 4rem;">
+      <ion-grid>
+        <ion-row>
+          <ion-col style="border: 2px solid #2c5aa3; margin: 5px;">
+          <ion-item >
+            <ion-input  [(ngModel)]="patient.nom" [ngModelOptions]="{standalone: true}" placeholder="Nom"></ion-input>
+          </ion-item>
+        </ion-col>
+          <ion-col style="border: 2px solid #2c5aa3; margin: 5px;">
+          <ion-item >
+            <ion-input  [(ngModel)]="patient.prenom" [ngModelOptions]="{standalone: true}" placeholder="Prénom"></ion-input>
+          </ion-item>
+        </ion-col>
+        </ion-row>
+
+        <ion-row style="border: 2px solid #2c5aa3;margin: 5px;">
+          <ion-col >
+          <ion-item >
+            <ion-label>Sexe</ion-label>
+            <ion-select [(ngModel)]="patient.sexe" placeholder="Selectionnez un">
+              <ion-select-option value="f">F</ion-select-option>
+              <ion-select-option value="m">M</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        </ion-row>
+
+        <ion-row style="border: 2px solid #2c5aa3;margin: 5px;">
+          
+          <ion-col>
+          <ion-item >
+            <ion-label>Date de naissance</ion-label>
+            <!--<ion-input type="date"  [(ngModel)]="dateNaissance" (keyup)="calculateDate()" [ngModelOptions]="{standalone: true}" placeholder="Téléphone2"></ion-input>-->
+
+            <ion-datetime [(ngModel)]="dateNaissance" (ionChange)="onChange()" [ngModelOptions]="{standalone: true}" displayFormat="DD MMMM YYYY" placeholder="j-m-a"></ion-datetime>
+          </ion-item>
+          </ion-col>
+         
+        </ion-row>
+        <ion-row style="border: 2px solid #2c5aa3;margin: 5px;">
+         
+          <ion-col>
+          <ion-item style="text-align: center !important;">
+            <label (click)="calculateDate()">Age :  <span class="badge" style="color:  #2c5aa3;" >{{age}}</span> ans</label>
+          </ion-item>
+        </ion-col>
+        </ion-row>
+        
+        <ion-row style="border: 2px solid #2c5aa3;margin: 5px;">
+         
+          <ion-col>
+          <ion-item style="text-align: center !important;">
+            <label >GSRH </label>
+            <ion-select [(ngModel)]="gsrc"  [ngModelOptions]="{standalone: true}" placeholder="Selectionnez un">
+              <ion-select-option   value="Omoins,">O-</ion-select-option>
+              <ion-select-option   value="Oplus,">O+</ion-select-option>
+              <ion-select-option   value="Amoins,">A-</ion-select-option>
+              <ion-select-option   value="Aplus,">A+</ion-select-option>
+              <ion-select-option   value="Bmoins,">B-</ion-select-option>
+              <ion-select-option   value="Bplus,">B+</ion-select-option>
+              <ion-select-option   value="ABmoins,">AB-</ion-select-option>
+              <ion-select-option   value="ABplus,">AB+</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        </ion-row>
+        <ion-row style="border: 2px solid #2c5aa3;margin: 5px;">
+         
+           <ion-col>
+          <ion-item >
+            <ion-label>Origine</ion-label>
+            <ion-select [(ngModel)]="patient.origin"  [ngModelOptions]="{standalone: true}" placeholder="Selectionnez un">
+              <ion-select-option  *ngFor="let p of origin" value="{{p.name}}">{{p.name}}</ion-select-option>
+
+            </ion-select>         
+         </ion-item>
+        </ion-col>
+        </ion-row>
+        
+        <ion-row *ngIf="patient.origin == 'Autre pays (précisez)'" style="border: 2px solid #2c5aa3;margin: 5px;">
+         
+          <ion-col>
+          <ion-item >
+            <ion-input  [(ngModel)]="patientOrigin" [ngModelOptions]="{standalone: true}" placeholder="Pays origin"></ion-input>
+         </ion-item>
+        </ion-col>
+        </ion-row>
+        
+        <ion-row style="border: 2px solid #2c5aa3;margin: 5px;">
+         
+          <ion-col>
+          <ion-item >
+            <ion-input  [(ngModel)]="patient.lieuResidence" [ngModelOptions]="{standalone: true}" placeholder="Lieu de résidence (facultatif)"></ion-input>
+         </ion-item>
+        </ion-col>
+        </ion-row>
+        
+        <ion-row>
+          <ion-col style="border: 2px solid #2c5aa3; margin: 5px;">
+          <ion-item >
+            <ion-input  [(ngModel)]="patient.tel1" [ngModelOptions]="{standalone: true}" placeholder="Téléphone1"></ion-input>
+          </ion-item>
+        </ion-col>
+          <ion-col style="border: 2px solid #2c5aa3; margin: 5px;">
+          <ion-item >
+            <ion-input  [(ngModel)]="patient.tel2" [ngModelOptions]="{standalone: true}" placeholder="confirmer le numéro (facultatif)"></ion-input>
+          </ion-item>
+        </ion-col>
+        </ion-row>
+
+        
+        <ion-row>
+          <ion-col style="border: 2px solid #2c5aa3; margin: 5px;">
+          <ion-item >
+            <ion-input  [(ngModel)]="patient.profession" [ngModelOptions]="{standalone: true}" placeholder="Profession"></ion-input>
+          </ion-item>
+        </ion-col>
+          <ion-col style="border: 2px solid #2c5aa3; margin: 5px;">
+          <ion-item >
+            <ion-input  [(ngModel)]="patient.lieuExercice" [ngModelOptions]="{standalone: true}" placeholder="Lieu exercice"></ion-input>
+          </ion-item>
+        </ion-col>
+        </ion-row>
+        
+        <ion-row style="border: 2px solid #2c5aa3; margin: 5px;">
+          <ion-col >
+          <ion-item >
+            <ion-label>Scolarisé</ion-label>
+          </ion-item>
+        </ion-col>
+          <ion-col style="margin: 0;padding: 0;">
+          <ion-item  >
+            <form>
+              <label (click)="checkEtude('oui')" style="margin-left: 5px !important;" class="radio-inline">
+                <input type="radio"   value="oui" name="optradio" >OUI
+              </label>
+              <label (click)="checkEtude('non')" style="margin-left: 5px !important;" class="radio-inline">
+                <input type="radio"   value="non" name="optradio">NON
+              </label>
+            </form>    
+          </ion-item>
+        </ion-col>  
+        </ion-row>
+
+        <ion-row *ngIf="etudiantOReleve == true">
+          <ion-col style="border: 2px solid #2c5aa3; margin: 5px;">
+          <ion-item >
+            <ion-input [(ngModel)]="patient.typeEtude" [ngModelOptions]="{standalone: true}" placeholder="Si oui préciser étude et type"></ion-input>
+          </ion-item>
+        </ion-col>
+         
+        </ion-row>
+        
+        <ion-row>
+          <ion-col style="border: 2px solid #2c5aa3; margin: 5px;">
+          <ion-item >
+            <ion-input  [(ngModel)]="accompagnant.accompagnantReferent" [ngModelOptions]="{standalone: true}" placeholder="Accompagnant (présisez le lien de parenté)"></ion-input>
+          </ion-item>
+        </ion-col>
+         
+        </ion-row>
+
+        
+        <ion-row>
+          <ion-col style="border: 2px solid #2c5aa3; margin: 5px;">
+          <ion-item >
+            <ion-input  [(ngModel)]="accompagnant.tel1" [ngModelOptions]="{standalone: true}" placeholder="Téléphone1 Accompagnant"></ion-input>
+          </ion-item>
+        </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col style="border: 2px solid #2c5aa3; margin: 5px;">
+          <ion-item >
+            <ion-input  [(ngModel)]="accompagnant.tel2" [ngModelOptions]="{standalone: true}" placeholder="Téléphone2 Accompagnant (facultatif)"></ion-input>
+          </ion-item>
+        </ion-col>
+        </ion-row>
+        
+        <ion-row>
+          <ion-col style="border: 2px solid #2c5aa3; margin: 5px;">
+          <ion-item >
+            <ion-input  [(ngModel)]="cardiologue.cardiologueReferent" [ngModelOptions]="{standalone: true}" placeholder="Cardiologue Référent"></ion-input>
+          </ion-item>
+        </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col style="border: 2px solid #2c5aa3; margin: 5px;">
+          <ion-item >
+            <ion-input  [(ngModel)]="cardiologue.lieuExercice" [ngModelOptions]="{standalone: true}" placeholder="Lieu exercice"></ion-input>
+          </ion-item>
+        </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col style="border: 2px solid #2c5aa3; margin: 5px;">
+          <ion-item >
+            <ion-input  [(ngModel)]="cardiologue.tel1" [ngModelOptions]="{standalone: true}" placeholder="Téléphone1 Cardiologue Référent"></ion-input>
+          </ion-item>
+        </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col style="border: 2px solid #2c5aa3; margin: 5px;">
+          <ion-item >
+            <ion-input  [(ngModel)]="cardiologue.tel2" [ngModelOptions]="{standalone: true}" placeholder="Téléphone2 Cardiologue Référent (facultatif)"></ion-input>
+          </ion-item>
+           </ion-col>
+        </ion-row>
+        
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="etatpeInscription == 2" class="welcome-card" style="padding: 0 !important;margin: 0 !important;">
+    <ion-card-header style="background-color: #3171e0;">
+      <ion-card-title style="text-align: center !important;color: white;">Nouvelle souscription suit...</ion-card-title>
+    </ion-card-header>
+    <ion-card-content style="margin-bottom: 4rem;">
+      <ion-grid>
+        <ion-row style="border: 2px solid #2c5aa3; margin: 5px;">
+          <ion-row>
+         <ion-item >
+            <label for="">Valvulopathie cardiaque</label>           
+        </ion-item>
+      </ion-row>
+        <ion-row>
+         <ion-col >
+            <ion-item >
+              <ion-label>IM : Insuffisance  Mitrale</ion-label>
+            </ion-item>
+            <ion-item >
+              <ion-select [(ngModel)]="valvulopathieCardiaque.im" [ngModelOptions]="{standalone: true}" interface="action-sheet" placeholder="grade">
+                <ion-select-option value="Minime">Minime</ion-select-option>
+                <ion-select-option value="Modérée">Modérée</ion-select-option>
+                <ion-select-option value="Moyenne">Moyenne</ion-select-option>
+                <ion-select-option value="Importante">Importante</ion-select-option>
+                <ion-select-option value="aucun">Aucun</ion-select-option>
+              </ion-select>            
+             </ion-item>
+          </ion-col>
+            
+          <ion-col >
+            <ion-item >
+              <ion-label>RM : Rétrécissement Mitrale</ion-label>
+            </ion-item>
+            <ion-item >
+              <ion-select [(ngModel)]="valvulopathieCardiaque.rm" [ngModelOptions]="{standalone: true}" interface="action-sheet" placeholder="grade">
+                <ion-select-option value="Lâche">Lâche</ion-select-option>
+                <ion-select-option value="Peu serré">Peu serré</ion-select-option>
+                <ion-select-option value="Moyennement serré">Moyennement serré</ion-select-option>
+                <ion-select-option value="Très serré">Très serré</ion-select-option>
+                <ion-select-option value="aucun">Aucun</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+            
+          <ion-col >
+              <ion-item >
+                <ion-label>IA : Insuffisance Aortique</ion-label>
+              </ion-item>
+              <ion-item >
+                <ion-select [(ngModel)]="valvulopathieCardiaque.ia" [ngModelOptions]="{standalone: true}" interface="action-sheet" placeholder="grade">
+                  <ion-select-option value="Minime">Minime</ion-select-option>
+                  <ion-select-option value="Modérée">Modérée</ion-select-option>
+                  <ion-select-option value="Moyenne">Moyenne</ion-select-option>
+                  <ion-select-option value="Importante">Importante</ion-select-option>
+                  <ion-select-option value="aucun">Aucun</ion-select-option>
+                </ion-select>       
+              </ion-item>
+          </ion-col>
+          
+          <ion-col >
+              <ion-item >
+                <ion-label>RA : Rétrécissement Aortique</ion-label>
+              </ion-item>
+              <ion-item >
+                <ion-select [(ngModel)]="valvulopathieCardiaque.ra" [ngModelOptions]="{standalone: true}" interface="action-sheet" placeholder="grade">
+                  <ion-select-option value="Lâche">Lâche</ion-select-option>
+                  <ion-select-option value="Peu serré">Peu serré</ion-select-option>
+                  <ion-select-option value="Moyennement serré">Moyennement serré</ion-select-option>
+                  <ion-select-option value="Très serré">Très serré</ion-select-option>
+                  <ion-select-option value="aucun">Aucun</ion-select-option>
+                </ion-select>
+              </ion-item>
+          </ion-col>
+
+          
+          <ion-col >
+            <ion-item >
+              <ion-label>IT : Insuffisance Tricuspide</ion-label>
+            </ion-item>
+             <ion-item >
+              <ion-select [(ngModel)]="valvulopathieCardiaque.it" [ngModelOptions]="{standalone: true}" interface="action-sheet" placeholder="grade">
+                <ion-select-option value="1">1</ion-select-option>
+                <ion-select-option value="2">2</ion-select-option>
+                <ion-select-option value="3">3</ion-select-option>
+                <ion-select-option value="4">4</ion-select-option>
+                <ion-select-option value="aucun">Aucun</ion-select-option>
+              </ion-select> 
+            </ion-item>
+          </ion-col>
+          <ion-row>
+          <ion-col >
+           
+              <ion-item style="margin-top: 5px;" >
+                <ion-label>ACFA</ion-label>
+                <form style="margin-left: 5rem;">
+                  <label (click)="valvulopathieCardiaque.acfa = 'OUI'" style="margin-left: 5px !important;" class="radio-inline">
+                    <input type="radio"   value="oui" name="optradio" >OUI
+                  </label>
+                  <label (click)="valvulopathieCardiaque.acfa = 'NOM'" style="margin-left: 5px !important;" class="radio-inline">
+                    <input type="radio"   value="non" name="optradio">NON
+                  </label>
+                </form>    
+              </ion-item>
+          </ion-col>
+        </ion-row>
+          <ion-row>
+            <ion-col style="width: 100%;" >
+              <ion-item >
+                <ion-label>Autre(s) affection(s) associée(s)</ion-label>
+
+              </ion-item>
+              <ion-item >
+                <ion-input  [(ngModel)]="valvulopathieCardiaque.autre" [ngModelOptions]="{standalone: true}" placeholder="Saisissez la maladie"></ion-input>
+                <ion-icon (click)="addaffection()" slot="end" name="add"></ion-icon>
+
+              </ion-item>
+              <ion-item *ngFor="let i of autreaffection">
+                <span  style="color: black;">{{i}}</span>
+              </ion-item>
+           </ion-col>
+          </ion-row>
+           
+        </ion-row>
+       </ion-row>
+      <ion-row style="border: 2px solid #2c5aa3;margin: 5px;">
+
+        <ion-col>
+          <ion-item >
+            <ion-label>Année découverte  maladie</ion-label>
+          
+            <ion-datetime  [(ngModel)]="valvulopathieCardiaque.anneeDecouverte" [ngModelOptions]="{standalone: true}" displayFormat="YYYY" placeholder="année"></ion-datetime>        
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+        <ion-row style="border: 2px solid #2c5aa3;margin: 5px;">
+          
+          <ion-col>
+            <ion-item >
+              <ion-label>Début suivi CTCV Fann</ion-label>
+            </ion-item>
+            <ion-item >
+              <ion-label>Mois</ion-label>
+              <ion-select [(ngModel)]="ctcv.mois" [ngModelOptions]="{standalone: true}" placeholder="mois">
+                <ion-select-option *ngFor="let m of mois" value="{{m.name}}">{{m.name}}</ion-select-option>
+                
+              </ion-select>
+              </ion-item>
+               <ion-item >
+              <ion-label>Année</ion-label>
+              <ion-datetime [(ngModel)]="ctcv.annee" [ngModelOptions]="{standalone: true}" displayFormat="YYYY" placeholder="année"></ion-datetime>
+            </ion-item>
+          </ion-col>
+         
+        </ion-row>
+        
+        <ion-row style="border: 2px solid #2c5aa3;margin: 5px;">
+          <ion-col style="width: 100%;" >
+            <ion-item >
+              <ion-label>Numéro dossier</ion-label>
+
+            </ion-item>
+            <ion-item >
+              <ion-input  [(ngModel)]="numeroDossier" [ngModelOptions]="{standalone: true}" placeholder="Numéro dossier"></ion-input>
+
+            </ion-item>
+         </ion-col>
+        </ion-row>
+
+        <ion-row style="border: 2px solid #2c5aa3;margin: 5px;">
+          <ion-col>
+            <ion-item >
+              <ion-label>Type valve</ion-label>
+           </ion-item>
+           <ion-row>
+                <ion-col >
+                  <ion-item >
+                    <ion-label>Position mitrale </ion-label>
+                  </ion-item>
+                </ion-col>
+                  <ion-col style="margin: 0;padding: 0;margin-left: -1rem;">
+                  <ion-item style="margin-top: 5px;" >
+                    <form>
+                      <label  style="margin-left: 5px !important;" class="radio-inline">
+                        <input type="radio" (click)="typevalve.positionMitrale.positionMitrale = 'OUI'"  value="oui" name="optradio" >OUI
+                      </label>
+                      <label  style="margin-left: 5px !important;" class="radio-inline">
+                        <input type="radio" (click)="typevalve.positionMitrale.positionMitrale = 'NOM'"  value="non" name="optradio">NON
+                      </label>
+                    </form>    
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+
+              <ion-row *ngIf="typevalve.positionMitrale.positionMitrale == 'OUI'">
+                
+                  <ion-col style="margin: 0;padding: 0;margin-left: -1rem;">
+                  <ion-item style="margin-top: 5px;margin-left: 1rem;" >
+                    <form>
+                      <label (click)="typevalve.positionMitrale.type = 'Mécanique'" style="margin-left: 5px !important;" class="radio-inline">
+                        <input type="radio"   value="oui" name="optradio" >Mécanique
+                      </label>
+                      <label (click)="typevalve.positionMitrale.type = 'Biologique'" style="margin-left: 5px !important;" class="radio-inline">
+                        <input type="radio"   value="non" name="optradio">Biologique
+                      </label>
+                    </form>    
+                  </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="typevalve.positionMitrale.positionMitrale == 'OUI'">
+              <ion-col >
+                <ion-item >
+                  <ion-label>Taille valve</ion-label>
+                  <ion-select [(ngModel)]="typevalve.positionMitrale.tailleValve" [ngModelOptions]="{standalone: true}" placeholder="Taille">
+                    <ion-select-option value="16">16</ion-select-option>
+                    <ion-select-option value="17">17</ion-select-option>
+                    <ion-select-option value="18">18</ion-select-option>
+                    <ion-select-option value="19">19</ion-select-option>
+                    <ion-select-option value="20">20</ion-select-option>
+                    <ion-select-option value="21">21</ion-select-option>
+                    <ion-select-option value="22">22</ion-select-option>
+                    <ion-select-option value="23">23</ion-select-option>
+                    <ion-select-option value="24">24</ion-select-option>
+                    <ion-select-option value="25">25</ion-select-option>
+                    <ion-select-option value="26">26</ion-select-option>
+                    <ion-select-option value="27">27</ion-select-option>
+                    <ion-select-option value="28">28</ion-select-option>
+                    <ion-select-option value="29">29</ion-select-option>
+                    <ion-select-option value="30">30</ion-select-option>
+                    <ion-select-option value="31">31</ion-select-option>
+                    <ion-select-option value="32">32</ion-select-option>
+                    <ion-select-option value="33">33</ion-select-option>
+                    <ion-select-option value="34">34</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+                <ion-col style="margin: 0;padding: 0;margin-left: -1rem;">
+                <ion-item style="margin-top: 5px;margin-left: 1rem;" >
+                  <ion-label>Fabriquant valve</ion-label>
+                  <ion-select [(ngModel)]="typevalve.positionMitrale.fabriquant" [ngModelOptions]="{standalone: true}" placeholder="Marque">
+                    <ion-select-option value="CARBOMEDICS STANDARD">CARBOMEDICS STANDARD</ion-select-option>
+                    <ion-select-option value="Liva Nova">Liva Nova</ion-select-option>
+                    <ion-select-option value="Saint-Jude">Saint-Jude</ion-select-option>
+                    <ion-select-option value="Medtronic">Medtronic</ion-select-option>
+                    <ion-select-option value="Autre">Autre</ion-select-option>
+                   
+                  </ion-select>
+                </ion-item>
+                <ion-item style="margin-top: 5px;margin-left: 1rem;" *ngIf="typevalve.positionMitrale.fabriquant == 'Autre'">
+                  <ion-input type="text" [(ngModel)]="vpf" [ngModelOptions]="{standalone: true}"  placeholder="Autre fabriquant Précisez "></ion-input>
+                </ion-item>
+              </ion-col>
+              
+               
+              <ion-col >
+                <ion-item >
+                  <ion-label>Date</ion-label>
+                  <ion-input type="date"  [(ngModel)]="typevalve.positionMitrale.date" [ngModelOptions]="{standalone: true}" ></ion-input>
+
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            </ion-col>
+          </ion-row>
+
+          <ion-row style="border: 2px solid #2c5aa3;margin: 5px;">
+            <ion-col>
+              
+             <ion-row>
+                  <ion-col >
+                    <ion-item >
+                      <ion-label>Position Aortique </ion-label>
+                    </ion-item>
+                  </ion-col>
+                    <ion-col style="margin: 0;padding: 0;margin-left: -1rem;">
+                    <ion-item style="margin-top: 5px;" >
+                      <form>
+                        <label (click)="typevalve.positionAortique.positionAortique = 'OUI'" style="margin-left: 5px !important;" class="radio-inline">
+                          <input type="radio"   value="oui" name="optradio" >OUI
+                        </label>
+                        <label (click)="typevalve.positionAortique.positionAortique = 'NON'" style="margin-left: 5px !important;" class="radio-inline">
+                          <input type="radio"   value="non" name="optradio">NON
+                        </label>
+                      </form>    
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+  
+                <ion-row *ngIf="typevalve.positionAortique.positionAortique == 'OUI'">
+                  
+                    <ion-col style="margin: 0;padding: 0;margin-left: -1rem;">
+                    <ion-item style="margin-top: 5px;margin-left: 1rem;" >
+                      <form>
+                        <label (click)="typevalve.positionAortique.type = 'Mécanique'" style="margin-left: 5px !important;" class="radio-inline">
+                          <input type="radio"   value="oui" name="optradio" >Mécanique
+                        </label>
+                        <label (click)="typevalve.positionAortique.type = 'Biologique'" style="margin-left: 5px !important;" class="radio-inline">
+                          <input type="radio"   value="non" name="optradio">Biologique
+                        </label>
+                      </form>    
+                    </ion-item>
+                  </ion-col>
+              </ion-row>
+              <ion-row *ngIf="typevalve.positionAortique.positionAortique == 'OUI'">
+                <ion-col >
+                  <ion-item >
+                    <ion-label>Taille valve</ion-label>
+                    <ion-select [(ngModel)]="typevalve.positionAortique.tailleValve" [ngModelOptions]="{standalone: true}" placeholder="Taille">
+                      <ion-select-option value="16">16</ion-select-option>
+                      <ion-select-option value="17">17</ion-select-option>
+                      <ion-select-option value="18">18</ion-select-option>
+                      <ion-select-option value="19">19</ion-select-option>
+                      <ion-select-option value="20">20</ion-select-option>
+                      <ion-select-option value="21">21</ion-select-option>
+                      <ion-select-option value="22">22</ion-select-option>
+                      <ion-select-option value="23">23</ion-select-option>
+                      <ion-select-option value="24">24</ion-select-option>
+                      <ion-select-option value="25">25</ion-select-option>
+                      <ion-select-option value="26">26</ion-select-option>
+                      <ion-select-option value="27">27</ion-select-option>
+                      <ion-select-option value="28">28</ion-select-option>
+                      <ion-select-option value="29">29</ion-select-option>
+                      <ion-select-option value="30">30</ion-select-option>
+                      <ion-select-option value="31">31</ion-select-option>
+                      <ion-select-option value="32">32</ion-select-option>
+                      <ion-select-option value="33">33</ion-select-option>
+                      <ion-select-option value="34">34</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+                  <ion-col style="margin: 0;padding: 0;margin-left: -1rem;">
+                  <ion-item style="margin-top: 5px;margin-left: 1rem;" >
+                    <ion-label>Fabriquant valve</ion-label>
+                    <ion-select [(ngModel)]="typevalve.positionAortique.fabriquant" [ngModelOptions]="{standalone: true}" placeholder="Marque">
+                      <ion-select-option value="CARBOMEDICS STANDARD">CARBOMEDICS STANDARD</ion-select-option>
+                      <ion-select-option value="Liva Nova">Liva Nova</ion-select-option>
+                      <ion-select-option value="Saint-Jude">Saint-Jude</ion-select-option>
+                      <ion-select-option value="Medtronic">Medtronic</ion-select-option>
+                      <ion-select-option value="Autre">Autre</ion-select-option>
+                     
+                    </ion-select>
+                  </ion-item>
+                <ion-item style="margin-top: 5px;margin-left: 1rem;" *ngIf="typevalve.positionAortique.fabriquant == 'Autre'">
+                  <ion-input type="text" [(ngModel)]="vaf" [ngModelOptions]="{standalone: true}"   placeholder="Autre fabriquant Précisez "></ion-input>
+                </ion-item>
+                </ion-col>
+                
+               
+                  <ion-col >
+                    <ion-item >
+                      <ion-label>Date</ion-label>
+                      <ion-input type="date"  [(ngModel)]="typevalve.positionAortique.date" [ngModelOptions]="{standalone: true}" placeholder="Autre(s) Gestes préciser"></ion-input>
+
+                    </ion-item>
+                  </ion-col>
+
+                
+              </ion-row>
+              </ion-col>
+            </ion-row>
+
+            <ion-row style="border: 2px solid #2c5aa3;margin: 5px;">
+              <ion-col>
+                
+               <ion-row>
+                    <ion-col >
+                      <ion-item >
+                        <ion-label>Plastie tricuspide </ion-label>
+                      </ion-item>
+                    </ion-col>
+                      <ion-col style="margin: 0;padding: 0;margin-left: -1rem;">
+                      <ion-item style="margin-top: 5px;" >
+                        <form>
+                          <label (click)="typevalve.plastieStricuspide.plastieStricuspide = 'OUI'" style="margin-left: 5px !important;" class="radio-inline">
+                            <input type="radio"   value="oui" name="optradio" >OUI
+                          </label>
+                          <label (click)="typevalve.plastieStricuspide.plastieStricuspide = 'NON'" style="margin-left: 5px !important;" class="radio-inline">
+                            <input type="radio"   value="non" name="optradio">NON
+                          </label>
+                        </form>    
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+    
+                  <ion-row *ngIf="typevalve.plastieStricuspide.plastieStricuspide == 'OUI'">
+                    <ion-col >
+                      <ion-item >
+                        <ion-label>Type de plastie</ion-label>
+                        <ion-select [(ngModel)]="typevalve.plastieStricuspide.typePlastie" [ngModelOptions]="{standalone: true}" placeholder="type">
+                          <ion-select-option value="De vega">De vega</ion-select-option>
+                          <ion-select-option value="Péricarde Autologue">Péricarde Autologue</ion-select-option>
+                          <ion-select-option value="Autre">Autre</ion-select-option>
+                        </ion-select>
+                      </ion-item>
+                            
+                      <ion-item style="margin-top: 5px;margin-left: 1rem;" *ngIf="typevalve.plastieStricuspide.typePlastie   == 'Autre'">
+                        <ion-input type="text" [(ngModel)]="vpt" [ngModelOptions]="{standalone: true}"  placeholder="Autre fabriquant Précisez "></ion-input>
+                      </ion-item>
+                    </ion-col>
+  
+                  </ion-row>
+                <ion-row *ngIf="typevalve.plastieStricuspide.plastieStricuspide == 'OUI'">
+                  <ion-col >
+                    <ion-item >
+                      <ion-label>Date</ion-label>
+                      <ion-input type="date"  [(ngModel)]="typevalve.plastieStricuspide.date" [ngModelOptions]="{standalone: true}" placeholder="Autre(s) Gestes préciser"></ion-input>
+
+                    </ion-item>
+                  </ion-col>
+
+                </ion-row>
+                </ion-col>
+              </ion-row>
+        <ion-row>
+          <ion-col style="border: 2px solid #2c5aa3; margin: 5px;">
+          <ion-item >
+            <ion-label>Autre(s) Geste(s) préciser</ion-label>
+          </ion-item>
+            <ion-item >
+            <ion-select [(ngModel)]="Gestes" (ionChange)="onChange1()"   multiple="true" [ngModelOptions]="{standalone: true}"  style="width: auto;" placeholder="Autre(s)">
+              <ion-select-option value="Fermeture auricule gauche">Fermeture auricule gauche</ion-select-option>
+              <ion-select-option value="Ablation thrombus oreillette gauche">Ablation thrombus oreillette gauche</ion-select-option>
+              <ion-select-option value="Elargissement anneau aortique">Elargissement anneau aortique</ion-select-option>
+              <ion-select-option value="Remplacement valvulaire tricuspide">Remplacement valvulaire tricuspide</ion-select-option>
+              <ion-select-option value="Plastie pulmonaire">Plastie pulmonaire</ion-select-option>
+              <ion-select-option value="Fermeture CIA">Fermeture CIA</ion-select-option>
+              <ion-select-option value="Fermeture FOP">Fermeture FOP</ion-select-option>
+              <ion-select-option value="Fermeture CIV">Fermeture CIV</ion-select-option>
+              <ion-select-option value="Remplacement valve pulmonaire">Remplacement valve pulmonaire </ion-select-option>
+              <ion-select-option value="Resection musculaire">Resection musculaire</ion-select-option>
+              <ion-select-option value="Autres">Autres</ion-select-option>
+            </ion-select>         
+           </ion-item>
+           <ion-item *ngIf="checkAutreGeste">
+            <ion-label>Autre(s) </ion-label>
+          </ion-item>
+          <ion-item *ngIf="checkAutreGeste"  >
+            <ion-input  [(ngModel)]="autreGestes" [ngModelOptions]="{standalone: true}" placeholder="préciser"></ion-input>
+
+           </ion-item>
+        </ion-col>
+         <!-- <ion-col *ngIf="checkAutreGeste" style="border: 2px solid #2c5aa3; margin: 5px;">
+         
+        </ion-col>-->
+         
+        </ion-row>
+
+        
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="etatpeInscription == 3" class="welcome-card" style="padding: 0 !important;margin: 0 !important;">
+    <ion-card-header style="background-color: #3171e0;">
+      <ion-card-title style="text-align: center !important;color: white;">Traitement anti-coagulant</ion-card-title>
+    </ion-card-header>
+    <ion-card-content style="margin-bottom: 4rem;">
+      <ion-grid>
+        <ion-row style="border: 2px solid #2c5aa3; margin: 5px;">
+          <ion-col >
+            
+            <ion-item  >
+              <ion-label>AVK</ion-label>     
+              <ion-select [(ngModel)]="avk" [ngModelOptions]="{standalone: true}" placeholder="avk">
+                <!--<ion-select-option value="Sintrom 4mg">Sintrom 4mg</ion-select-option>
+                <ion-select-option value="Préviscan 20mg">Préviscan 20mg</ion-select-option>
+                <ion-select-option value="Coumadine 5mg">Coumadine 5mg</ion-select-option>-->
+                <ion-select-option *ngFor="let i of listeavk"  value="{{i.nom}}-{{i.dose}}">{{i.nom}}-{{i.dose}}</ion-select-option>
+                <ion-select-option value="Autre">Autre</ion-select-option>
+              </ion-select>            
+             </ion-item> 
+             <ion-item *ngIf="avk == 'Autre'">
+              <ion-input  [(ngModel)]="autreAvk" [ngModelOptions]="{standalone: true}" placeholder="Autre(s) nom avk - dose"></ion-input>
+             </ion-item>
+            <ion-item  >
+              <ion-label>Heure prise AVK </ion-label>     
+              <ion-input  [(ngModel)]="heurepriseavk" [ngModelOptions]="{standalone: true}" placeholder="Heure prise avk"></ion-input>
+       
+             </ion-item> 
+             <ion-item >
+               <ion-label>Posologie AVK</ion-label>
+              <ion-input  [(ngModel)]="doseavk" [ngModelOptions]="{standalone: true}" placeholder="Dose avk"></ion-input>
+             </ion-item>
+     
+          </ion-col>
+
+        </ion-row>      
+        <ion-row style="border: 2px solid #2c5aa3; margin: 5px;">
+        <ion-col >
+          <ion-item  >
+            <ion-label>Héparine </ion-label>     
+            <ion-select [(ngModel)]="heparine" [ngModelOptions]="{standalone: true}" placeholder="Héparine">
+              <!--<ion-select-option value="Troynoxa">Troynoxa</ion-select-option>
+              <ion-select-option value="Lovenox">Lovenox</ion-select-option>
+              <ion-select-option value="Novex">Novex</ion-select-option>-->
+              <ion-select-option *ngFor="let l of listeHeparine" value="{{l.nom}}-{{l.dose}}">{{l.nom}}-{{l.dose}}</ion-select-option>
+
+              <ion-select-option value="Autre">Autre</ion-select-option>
+            </ion-select>            
+           </ion-item> 
+           <ion-item *ngIf="heparine == 'Autre'">
+            <ion-input  [(ngModel)]="autreheparine" [ngModelOptions]="{standalone: true}" placeholder="Autre(s) Héparine préciser"></ion-input>
+           </ion-item>
+          <ion-item>
+            <ion-label>Heure prise héparine </ion-label>     
+            <ion-select placeholder="heure" [(ngModel)]="heureheparine" [ngModelOptions]="{standalone: true}">
+              <ion-select-option value="12h-00h">12h-00h</ion-select-option>
+              <ion-select-option value="13h-01h">13h-01h</ion-select-option>
+              <ion-select-option value="14h-02h">14h-02h</ion-select-option>
+              <ion-select-option value="15h-03h">15h-03h</ion-select-option>
+              <ion-select-option value="16h-04h">16h-04h</ion-select-option>
+              <ion-select-option value="17h-05h">17h-05h</ion-select-option>
+              <ion-select-option value="18h-06h">18h-06h</ion-select-option>
+              <ion-select-option value="19h-07h">19h-07h</ion-select-option>
+              <ion-select-option value="20h-08h">20h-08h</ion-select-option>
+              <ion-select-option value="21h-09h">21h-09h</ion-select-option>
+              <ion-select-option value="22h-10h">22h-10h</ion-select-option>
+              <ion-select-option value="23h-11h">23h-11h</ion-select-option>
+              <ion-select-option value="00h-12h">00h-12h</ion-select-option>
+  
+            </ion-select>            
+           </ion-item> 
+           <ion-item  >
+            <ion-label>Posologie héparine </ion-label>     
+            <ion-select placeholder="dose" [(ngModel)]="doseheparine" [ngModelOptions]="{standalone: true}">
+              <ion-select-option value="0.1 x2/j">0.1 x2/j</ion-select-option>
+              <ion-select-option value="0.2 x2/j">0.2 x2/j</ion-select-option>
+              <ion-select-option value="0.3 x2/j">0.3 x2/j</ion-select-option>
+              <ion-select-option value="0.4 x2/j">0.4 x2/j</ion-select-option>
+              <ion-select-option value="0.5 x2/j">0.5 x2/j</ion-select-option>
+              <ion-select-option value="0.6 x2/j">0.6 x2/j</ion-select-option>
+              <ion-select-option value="0.7 x2/j">0.7 x2/j</ion-select-option>
+              <ion-select-option value="0.8 x2/j">0.8 x2/j</ion-select-option>
+              <ion-select-option value="0.9 x2/j">0.9 x2/j</ion-select-option>
+              <ion-select-option value="1 x2/j">1 x2/j</ion-select-option>
+            </ion-select>            
+            </ion-item> 
+            <ion-item>
+              <ion-label>Date début</ion-label>
+              <ion-input type="date" [(ngModel)]="dateDebutheparine" [ngModelOptions]="{standalone: true}"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>Date fin</ion-label>
+              <ion-input type="date" [(ngModel)]="dateFinheparine" [ngModelOptions]="{standalone: true}"></ion-input>
+            </ion-item>
+        </ion-col>
+      </ion-row>    
+      <ion-row style="border: 2px solid #2c5aa3; margin: 5px;">
+      <ion-col >
+        <ion-item  >
+          <ion-label>INR cible</ion-label>     
+         </ion-item> 
+         
+         <ion-item >
+          <ion-input  [(ngModel)]="inrMin" [ngModelOptions]="{standalone: true}" placeholder="INR MIN"></ion-input>
+         </ion-item>
+         <ion-item >
+          <ion-input  [(ngModel)]="inrMax" [ngModelOptions]="{standalone: true}" placeholder="INR MAX"></ion-input>
+         </ion-item>
+       
+      </ion-col>
+    </ion-row>
+    <ion-row style="border: 2px solid #2c5aa3; margin: 5px;">
+      <ion-col >
+        <ion-item  >
+          <ion-label>Autre(s) médicament(s)</ion-label>     
+          
+          </ion-item> 
+          <ion-item>
+            <ion-input  [(ngModel)]="nomAutreMedoc" [ngModelOptions]="{standalone: true}" placeholder="Nom médicament"></ion-input>
+          </ion-item>
+          <ion-item >
+            <ion-input  [(ngModel)]="doseAutreMedoc" [ngModelOptions]="{standalone: true}" placeholder="Dose"></ion-input>
+            <ion-input  [(ngModel)]="posologieAutreMedoc" [ngModelOptions]="{standalone: true}" placeholder="Posologie"></ion-input>
+            <ion-icon (click)="addMedicament()" slot="end" name="add"></ion-icon>
+
+          </ion-item>
+          <ion-item *ngFor="let i of autremedicamenttab">
+            <span  style="color: black;">{{i.nom}} {{i.dose}} {{i.posologie}}</span>
+          </ion-item>
+
+  
+        </ion-col>
+      </ion-row>  
+        
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+  <div style="bottom: 0;position: fixed;background: whitesmoke;width: 100%;margin: 0;padding: 0;box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);">
+    <div style="width: 100%;background-color: #3171e0;">
+     
+      <ion-button *ngIf="etatpeInscription == 1 || etatpeInscription == 0" style="width: 48%;" size="large" (click)="retour()" color="danger"><ion-icon style="color: white;" name="backspace"></ion-icon>Annuler</ion-button>  
+      <ion-button *ngIf="etatpeInscription == 1 || etatpeInscription == 0" [disabled]="!this.patient.tel1" style="width: 48%;" size="large" (click)="suivant()" color="primary">Suivant<ion-icon name="play"></ion-icon></ion-button>    
+     
+      <ion-button *ngIf="etatpeInscription == 2" style="width: 48%;" size="large" (click)="retour()" color="primary"><ion-icon style="color: white;font-size:medium;" name="arrow-back"></ion-icon>Précédent</ion-button>  
+      <ion-button *ngIf="etatpeInscription == 2" style="width: 48%;" size="large" (click)="suivant1()" color="primary">Suivant<ion-icon name="play"></ion-icon></ion-button>    
+
+     
+      <ion-button *ngIf="etatpeInscription == 3" style="width: 48%;" size="large" (click)="retour()" color="primary"><ion-icon style="color: white;font-size:medium;" name="arrow-back"></ion-icon>Précédent</ion-button>  
+      <ion-button *ngIf="etatpeInscription == 3" style="width: 48%;" size="large" (click)="presentAlert()"  color="success">Valider<ion-icon name="checkbox-outline"></ion-icon></ion-button>    
+
+    
+    </div>
+  </div>
+<!--<ion-grid>
+  <ion-row style="bottom: 0;position: fixed;background: #3880ff;width: 98%;margin: 0;padding: 0;">
+    <ion-col style="border: 2px solid #3880ff; margin: 5px;">
+    <ion-item style="background-color: #3880ff !important;">
+      <ion-button size="large" color="primary">Annuler</ion-button>    
+    </ion-item>
+  </ion-col>
+    <ion-col style="border: 2px solid #3880ff; margin: 5px;">
+    <ion-item style="background-color: #3880ff !important;">
+      <ion-button size="large" [disabled]="!suivant" color="primary">Suivant</ion-button>    
+    </ion-item>
+  </ion-col>
+  </ion-row>
+</ion-grid>-->
+</ion-content>

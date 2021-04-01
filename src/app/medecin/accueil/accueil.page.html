@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Accueil Médecin
+      <img  style="width: 10%;height: 100%;float: right;" src="/assets/iconModif.png" alt="">
+
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card class="welcome-card myCard" style="min-height: 100% ;margin: -1px !important;padding: 0;background-color: whitesmoke;"  >
+    <ion-card-header style="background-color: #008B8B;border-bottom-left-radius: 30%;">
+    <div style="text-align: center;color: white;">
+      <span>Dr</span> <span>{{currentUser}}</span>
+    </div>
+    
+  </ion-card-header>
+   <ion-card-content style="padding: 0px !important;">
+
+  
+  <div style="text-align: center;">
+    <ion-grid>
+      <ion-row  class="container">
+        <ion-col style=" margin: 5px;">
+        <ion-item style="text-align: center;">
+            <ion-label style="color: #008B8B;"><strong>Listes des  patients</strong></ion-label>    
+        </ion-item>
+        </ion-col>
+
+        <ion-row  style=" width: 100%;">   
+              
+          <ion-item  style="min-width: 100%;">
+            <ion-label>Recherche </ion-label>     
+            <ion-input  [(ngModel)]="filtre" (keyup)="transform(this.patient,filtre)" [ngModelOptions]="{standalone: true}" type="text" placeholder="filtre"></ion-input>
+          </ion-item>      
+            <ion-grid >
+              <ion-row >
+                <ion-col size="2.5" style="text-align: start;font-weight:bold">N°Dossier</ion-col>
+                <ion-col size="2.5" style="text-align: start;font-weight:bold" >Nom</ion-col>
+                <ion-col size="3" style="text-align: start;font-weight:bold">Prénom</ion-col>
+                <ion-col size="4"style="text-align: start;font-weight:bold" >Téléphone</ion-col>
+              </ion-row> 
+              <div  >
+              <ion-row  *ngFor="let t of patient ;let i = index" (click)="loadPatient(t.id)">
+                <ion-col size="2.5"style="text-align: start;" >{{t.numero_dossier}}</ion-col>
+                <ion-col size="2.5"style="text-align: start;" >{{t.nom}}</ion-col>
+                <ion-col size="3" style="text-align: start;" >{{t.prenom}}</ion-col>
+                <ion-col size="4" style="text-align: start;">{{t.tel1}}<ion-badge *ngIf="t.isNews != null && t.isNews == 1" color="warning">1</ion-badge></ion-col>
+              </ion-row>
+            </div>
+            </ion-grid>
+
+        </ion-row>
+      </ion-row>
+  
+   </ion-grid>
+  </div>
+</ion-card-content>
+</ion-card>
+</ion-content>
