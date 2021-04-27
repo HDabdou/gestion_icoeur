@@ -183,7 +183,12 @@
 </ion-row> 
 
 <ion-row *ngIf='isDone' style="border: 2px solid #008B8B;" class="container">
-    <ion-col style="background: #008B8B;" >
+  <ion-col style="background: #008B8B;" >
+    <ion-item style="text-align: center;min-width: 100%;background: #008B8B;" *ngIf="isDone">
+      <ion-button style="min-width: 100%;"  (click)="insertTpINR()" color="primary">Ajouter TP/INR</ion-button>
+    </ion-item>
+  </ion-col> 
+  <ion-col style="background: #008B8B;" >
     <ion-item style="text-align: center;min-width: 100%;background: #008B8B;" *ngIf="isDone">
       <ion-label style="color: white;"><strong>INR cible  : [ min ={{maladie.inrCibleMin}} , max = {{maladie.inrCibleMax}}]</strong></ion-label>    
     </ion-item>
@@ -283,8 +288,11 @@
     
       <ion-col>
         <ion-item >
-          <ion-button style="min-width: 100%;"  (click)="presentAlert(avk)" color="danger">Modifier</ion-button>
+          <ion-button style="min-width: 100%;"  (click)="maintenirLaDoseAVK(avk)" color="primary">Maintenir la même posologie d’AVK</ion-button>
       </ion-item>
+      <ion-item >
+        <ion-button style="min-width: 100%;"  (click)="presentAlert(avk)" color="danger">Modifier</ion-button>
+       </ion-item>
       </ion-col>
         
       <ion-item *ngIf="updateAVK == 'maintenir'">
@@ -326,10 +334,10 @@
         <ion-row  style=" width: 100%;">        
             <ion-grid >
               <ion-row >
-                <ion-col size="3.5" style="text-align: start;" >Date</ion-col>
-                <ion-col size="4.3" style="text-align: start;">AVK</ion-col>
-                <ion-col size="2.5"style="text-align: start;" >Dose</ion-col>
-                <ion-col size="1.7" style="text-align: start;">INR</ion-col>
+                <ion-col size="3.5" style="text-align: start;color: #008B8B !important;text-transform: capitalize;" >Date</ion-col>
+                <ion-col size="4.3" style="text-align: start;color: #008B8B !important;text-transform: capitalize;">AVK</ion-col>
+                <ion-col size="2.5"style="text-align: start;color: #008B8B !important;text-transform: capitalize;" >Dose</ion-col>
+                <ion-col size="1.7" style="text-align: start;color: #008B8B !important;text-transform: capitalize;">INR</ion-col>
               </ion-row> 
               <div  *ngIf="checkAVK">
               <ion-row  *ngFor="let t of avkHistorique;let i = index" >
@@ -381,11 +389,14 @@
           </ion-item>
 
         </ion-col>
-        <ion-item style="min-width: 100%;background-color: red;text-align: center;" *ngIf="heparine.etat == 1">
+        <ion-item style="min-width: 100%;background-color: red;text-align: center;" *ngIf="heparine.etat == 0">
            <ion-label style="background-color: red;"><p style="color: white;">Heparine Arrêté</p></ion-label>
         </ion-item>
         
         <ion-col>
+          <ion-item >
+            <ion-button style="min-width: 100%;"  (click)="maintenirLaDoseHeparine(heparine)" color="primary">Maintenir la même posologie </ion-button>
+          </ion-item>
           <ion-item >
             <ion-button style="min-width: 100%;"  (click)="presentAlert1(heparine)" color="danger">Modifier</ion-button>
         </ion-item>
@@ -413,6 +424,10 @@
           <ion-label>Vous voullez arretés l'héparine</ion-label>
           <ion-icon (click)="stopHeparine(heparine)"  name="checkbox"></ion-icon>
         </ion-item>
+        <ion-item *ngIf="updateHeparine == 'restartHeparine'">
+          <ion-label>Vous voullez reprendre l'héparine</ion-label>
+          <ion-icon (click)="restartHeparine(heparine)"  name="checkbox"></ion-icon>
+        </ion-item>
       </ion-row>
           
     </ion-row>  
@@ -428,10 +443,10 @@
       <ion-row  style=" width: 100%;">        
           <ion-grid >
             <ion-row >
-              <ion-col size="4.3" style="text-align: start;" >DATE</ion-col>
-              <ion-col size="4" style="text-align: start;">HEPARINE</ion-col>
-              <ion-col size="2"style="text-align: start;" >Dose</ion-col>
-              <ion-col size="1.7" style="text-align: start;">INR</ion-col>
+              <ion-col size="4.3" style="text-align: start;color: #008B8B !important;" >DATE</ion-col>
+              <ion-col size="4" style="text-align: start;color: #008B8B !important;">HEPARINE</ion-col>
+              <ion-col size="2"style="text-align: start;color: #008B8B !important;" >Dose</ion-col>
+              <ion-col size="1.7" style="text-align: start;color: #008B8B !important;">INR</ion-col>
             </ion-row> 
             <div  *ngIf="Accidant">
             <ion-row  *ngFor="let t of heparineHistorique;let i = index" (click)="showDetail(t)" >

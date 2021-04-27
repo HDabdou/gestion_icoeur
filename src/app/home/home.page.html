@@ -16,12 +16,16 @@
 <ion-content >
   
   <ion-card class="welcome-card myCard" style="margin: -1px !important;padding: 0;margin-bottom: 2rem !important;"  >
-    <ion-card-header style="background-color: #FF6347;border-bottom-left-radius: 30%;">
+    <div style="width: 100%;text-align: center;background-color: whitesmoke;">
+      <span style="background-color: whitesmoke;color: black;color: #4BCFBC;" (click)="gotToHowTouser()">Comment utiliser icoeur? <span style="background: #4BCFBC;color: white;border-radius: 41%;"><ion-icon  name="redo"></ion-icon></span></span>
+    </div>
+    <ion-card-header style="background-color:#4BCFBC;border-bottom-left-radius: 25%;border-bottom-right-radius: 25%;">
+      
     <div style="text-align: center;color: white;">
-      <span *ngIf="data.sexe == 'm'">Mr</span><span *ngIf="data.sexe == 'f'">Mme</span><span>{{data.nom}}</span><span>{{data.prenom}}</span> <span>{{calculateDate(data.dateNaissance)}} ans</span> <span>{{displayGRHS(data.gsrh)}},</span><span *ngIf="currentMaladie != undefined" > {{currentMaladie.numero_dossier}}</span> 
+      <span *ngIf="data.sexe == 'm'">Mr</span><span *ngIf="data.sexe == 'f'">Mme</span><span>{{data.nom}}</span><span>{{data.prenom}}</span> <span>{{calculateDate(data.dateNaissance)}} ans</span> <span>{{displayGRHS(data.gsrh)}}</span><span *ngIf="currentMaladie != undefined" > {{currentMaladie.numero_dossier}}</span> 
     </div>
     <div style="text-align: center;color: white;">
-      <span style="font-size: 20px;font-style: italic;">Cardiologue : </span><span style="font-size: 20px;font-style: italic;">{{data.cardiologueReferant}}</span> 
+      <span style="font-size: 20px;font-style: italic; color: #156760;">Cardiologue : </span><span style="font-size: 20px;font-style: italic;">{{data.cardiologueReferant}} <span style="font-size: 15px;color: black;">( {{data.cardioalogueReferent}} )</span></span> 
     </div>
   </ion-card-header>
    <ion-card-content style="padding: 0px !important;">
@@ -131,7 +135,7 @@
           <ion-row *ngIf="isMaladie" class="container">
             <ion-col style=" margin: 5px;">
             <ion-item style="text-align: center;" *ngIf="isTpinr">
-                <ion-label style="color: #FF6347;"><strong>Dernier TP-INR  {{displayDate(lastTpinr.date_ajout)}}</strong></ion-label>     
+                <ion-label style="color:#4BCFBC;"><strong>Dernier TP-INR  {{displayDate(lastTpinr.date_ajout)}}</strong></ion-label>     
             </ion-item>
             </ion-col>
             <ion-row  style=" margin: 5px;min-width: 100%;">
@@ -187,11 +191,11 @@
         <ion-row class="container">
           <ion-col style=" margin: 5px;">
             <ion-item style="text-align: center;">
-                <ion-label style="color: #FF6347;"><strong>N° garde cardio de FANN : 774879519</strong></ion-label>     
+                <ion-label style="color:#4BCFBC;"><strong>N° garde cardio de FANN : 774879519</strong></ion-label>     
             </ion-item>
             </ion-col><ion-col style=" margin: 5px;">
               <ion-item style="text-align: center;">
-                  <ion-label style="color: #FF6347;"><strong>N° garde CTCV de FANN : 774879517</strong></ion-label>     
+                  <ion-label style="color:#4BCFBC;"><strong>N° garde CTCV de FANN : 774879517</strong></ion-label>     
               </ion-item>
               </ion-col>
         
@@ -201,7 +205,7 @@
         <ion-row *ngIf="isMaladie" style="border: 2px solid darkred;" class="container">
           <ion-col style=" margin: 5px;min-width: 100%;">
           <ion-item style="text-align: center;">
-              <ion-label style="color: #FF6347;"><strong>GESTE(S)</strong></ion-label>     
+              <ion-label style="color:#4BCFBC;"><strong>GESTE(S)</strong></ion-label>     
           </ion-item>
           </ion-col>
           <ion-row *ngIf="currentMaladie.position_mital == 'OUI'" style=" margin: 5px;width: 100%;">
@@ -261,7 +265,7 @@
         <ion-row *ngIf="isMaladie" class="container">
           <ion-col style=" margin: 5px;">
           <ion-item style="text-align: center;" *ngIf="isTpinr">
-              <ion-label style="color: #FF6347;"><strong>Autres affections</strong></ion-label>     
+              <ion-label style="color:#4BCFBC;"><strong>Autres affections</strong></ion-label>     
           </ion-item>
           </ion-col>
           <ion-row  style=" margin: 5px;min-width: 100%;">

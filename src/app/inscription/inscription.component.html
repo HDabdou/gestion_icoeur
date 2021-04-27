@@ -323,7 +323,7 @@
                   <label (click)="valvulopathieCardiaque.acfa = 'OUI'" style="margin-left: 5px !important;" class="radio-inline">
                     <input type="radio"   value="oui" name="optradio" >OUI
                   </label>
-                  <label (click)="valvulopathieCardiaque.acfa = 'NOM'" style="margin-left: 5px !important;" class="radio-inline">
+                  <label (click)="valvulopathieCardiaque.acfa = 'NON'" style="margin-left: 5px !important;" class="radio-inline">
                     <input type="radio"   value="non" name="optradio">NON
                   </label>
                 </form>    
@@ -801,8 +801,8 @@
             <ion-icon (click)="addMedicament()" slot="end" name="add"></ion-icon>
 
           </ion-item>
-          <ion-item *ngFor="let i of autremedicamenttab">
-            <span  style="color: black;">{{i.nom}} {{i.dose}} {{i.posologie}}</span>
+          <ion-item *ngFor="let i of autremedicamenttab;let ind = index;">
+            <span  style="color: black;width: 100% !important;">{{i.nom}} {{i.dose}} {{i.posologie}} <ion-icon (click)="selectedMedoc = i;removeMedic(ind)" style="float: right;" slot="end" name="close"></ion-icon> </span>
           </ion-item>
 
   

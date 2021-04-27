@@ -24,7 +24,12 @@
   <div style="text-align: center;">
     <ion-grid>
       <ion-row  class="container">
-        <ion-col style=" margin: 5px;">
+        <ion-col >
+        <ion-item style="text-align: center;">
+            <ion-label style="color: #008B8B;"><a class="btn btn-info" style="color:white" (click)="inscription()"><b> Créer un compte Patient</b></a></ion-label>    
+        </ion-item>
+        </ion-col>
+        <ion-col >
         <ion-item style="text-align: center;">
             <ion-label style="color: #008B8B;"><strong>Listes des  patients</strong></ion-label>    
         </ion-item>
@@ -34,7 +39,7 @@
               
           <ion-item  style="min-width: 100%;">
             <ion-label>Recherche </ion-label>     
-            <ion-input  [(ngModel)]="filtre" (keyup)="transform(this.patient,filtre)" [ngModelOptions]="{standalone: true}" type="text" placeholder="filtre"></ion-input>
+            <ion-input  (keyup) = "searchAll()" [(ngModel)]="this.motcle" [ngModelOptions]="{standalone: true}" type="text" placeholder="filtre"></ion-input>
           </ion-item>      
             <ion-grid >
               <ion-row >

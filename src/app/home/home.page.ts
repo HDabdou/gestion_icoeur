@@ -44,6 +44,9 @@ export class HomePage implements OnInit {
     });
    
   }
+  gotToHowTouser(){
+    this.router.navigate(['/how-to-user-icoeur'])
+  }
    async deconnexion() {
     const alert = await this.alertController.create({
       header: 'I-coeur',
@@ -149,8 +152,10 @@ export class HomePage implements OnInit {
     await this.loading.present();
   }
   displayDate(date){
-    let frdate = new Date(date).toLocaleString().split(' ')[0];
-    return frdate
+    console.log("date to parse")
+    console.log(date)
+    let frdate = date.split(' ')[0];
+    return frdate.split('-')[2]+"-"+frdate.split('-')[1]+"-"+frdate.split('-')[0]
   }
   ionViewWillEnter(){
   

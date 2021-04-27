@@ -10,8 +10,10 @@ import { ICoeurServiceService } from '../../services/i-coeur-service.service';
 })
 export class AccueilPage implements OnInit {
 
-  filtre
+  filtre;
   patient = []
+  motcle;
+  patientSave = []
   constructor(private menuCtrl: MenuController,private router:Router,private _serviceIcoeur:ICoeurServiceService) { }
 
   includesStr(values, str) {
@@ -25,6 +27,22 @@ export class AccueilPage implements OnInit {
   doFilter() { // without type info
  
 
+}
+searchAll(){
+  let value = this.motcle;
+    console.log("PASS", { value });
+  
+    const filterTable = this.patientSave.filter(o =>
+      Object.keys(o).some(k =>
+        String(o[k])
+          .toLowerCase()
+          .includes(value.toLowerCase())
+      )
+    );
+    this.patient = filterTable;
+}
+inscription(){
+  this.router.navigate(['/inscription']);
 }
 loadPatient(id){
   this._serviceIcoeur.onUserUpdate({id:id,new:0}).then(res=>{
@@ -56,6 +74,8 @@ ionViewWillEnter(){
   this._serviceIcoeur.getPatientByMedcin({medecin:JSON.parse(localStorage.getItem('currentUser')).id}).then(res=>{
     if(res['status'] == true){
       this.patient = res['Message'];
+      this.patientSave = this.patient
+
     }
   })
 }
@@ -65,6 +85,8 @@ ionViewDidLoad(){
   this._serviceIcoeur.getPatientByMedcin({medecin:JSON.parse(localStorage.getItem('currentUser')).id}).then(res=>{
     if(res['status'] == true){
       this.patient = res['Message'];
+      this.patientSave = this.patient
+
     }
   })
 }
@@ -75,6 +97,7 @@ currentUser
     this._serviceIcoeur.getPatientByMedcin({medecin:JSON.parse(localStorage.getItem('currentUser')).id}).then(res=>{
       if(res['status'] == true){
         this.patient = res['Message'];
+        this.patientSave = this.patient
       }
     })
 

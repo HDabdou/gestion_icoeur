@@ -9,10 +9,10 @@ export class AccidentAvkPage implements OnInit {
 
   constructor() { }
   listeAccident =[
-    "accident1",
-    "accident2",
-    "accident3",
-    "accident4",
+    "a1",
+    "a2",
+    "a3",
+    "a4",
   ]
   ngOnInit() {
   }

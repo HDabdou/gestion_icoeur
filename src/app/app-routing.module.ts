@@ -75,7 +75,11 @@ const routes: Routes = [
   {
     path: 'first-log',
     loadChildren: () => import('./first-log/first-log.module').then( m => m.FirstLogPageModule)
+  },  {
+    path: 'how-to-user-icoeur',
+    loadChildren: () => import('./how-to-user-icoeur/how-to-user-icoeur.module').then( m => m.HowToUserIcoeurPageModule)
   }
+
 ];
 
 @NgModule({

@@ -53,11 +53,17 @@ export class InscriptionComponent implements OnInit {
   photoHeparine = "";
   avkChoosen:any;
   heparineChoosen:any;
+  selectedMedoc;
+  removeMedic(arg){
+    console.log(arg)
+    this.autremedicamenttab.splice(arg,1)
+
+  }
+  
   addMedicament(){
     if(this.nomAutreMedoc != undefined && this.doseAutreMedoc != undefined && this.posologieAutreMedoc != undefined){
     this.autremedicamenttab.push({nom:this.nomAutreMedoc,dose:this.doseAutreMedoc,posologie:this.posologieAutreMedoc})
    }
-    console.log(this.autremedicamenttab)
     this.nomAutreMedoc = undefined
     this.doseAutreMedoc = undefined
     this.posologieAutreMedoc = undefined
@@ -176,7 +182,7 @@ export class InscriptionComponent implements OnInit {
     this.etatpeInscription = this.etatpeInscription -1;
     if(this.etatpeInscription == 0){
 
-        this.router.navigate(['/'])
+        this.router.navigate(['/accueil'])
       }
   }
   customYearValues = [2020, 2016, 2008, 2004, 2000, 1996];

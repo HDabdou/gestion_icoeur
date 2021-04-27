@@ -130,9 +130,19 @@ export class SuiviPatientPage implements OnInit {
   }
   stopHeparine(arg){
     
-    this._serviceIcoeur.stopHeparine(arg.id).then(res =>{
+    this._serviceIcoeur.stopHeparine({id:arg.id,etat:0}).then(res =>{
       if(res['status'] == true){                 
         this.heparine.etat = 0;
+        this.updateHeparine = "";
+      }
+    })
+  
+  }
+  restartHeparine(arg){
+    
+    this._serviceIcoeur.stopHeparine({id:arg.id,etat:1}).then(res =>{
+      if(res['status'] == true){                 
+        this.heparine.etat = 1;
         this.updateHeparine = "";
       }
     })
@@ -252,12 +262,7 @@ export class SuiviPatientPage implements OnInit {
     const alert = await this.alertController.create({
       header: arg.nom+" "+arg.dose,
       inputs: [
-        {
-          name: 'maintenir',
-          label: 'Maintenir la même posologie d’AVK',
-          type:"radio",
-          value:'maintenir'
-        },
+       
         {
           name: 'changer',
           label: 'Changer la posologie',
@@ -277,19 +282,7 @@ export class SuiviPatientPage implements OnInit {
         cssClass: 'success',
         handler: data=> {
           if(data == 'maintenir'){
-            this._serviceIcoeur.UpdateAVK({nom:arg.nom,heure_prise:arg.heure_prise,dose:arg.dose,id:arg.id}).then(res=>{
-              if(res['status']){
-                this._serviceIcoeur.getLastTpInr({patient:arg.patient}).then(res =>{
-                  if(res['status'] == true){
-                    let rep  =res['Message'];
-                    this._serviceIcoeur.createHistorique({type:"avk",nom:arg.nom,heure_prise:arg.heure_prise,dose:arg.dose,inr:rep.inr,patient:arg.patient,medecin:arg.medecin}).then(res=>{
-                      console.log(res)
-                    })
-      
-                  }
-                })
-              }
-            })
+
         
             
           }
@@ -301,7 +294,21 @@ export class SuiviPatientPage implements OnInit {
 
     await alert.present();
   }
-  
+  maintenirLaDoseAVK(arg){
+    this._serviceIcoeur.UpdateAVK({nom:arg.nom,heure_prise:arg.heure_prise,dose:arg.dose,id:arg.id}).then(res=>{
+      if(res['status']){
+        this._serviceIcoeur.getLastTpInr({patient:arg.patient}).then(res =>{
+          if(res['status'] == true){
+            let rep  =res['Message'];
+            this._serviceIcoeur.createHistorique({type:"avk",nom:arg.nom,heure_prise:arg.heure_prise,dose:arg.dose,inr:rep.inr,patient:arg.patient,medecin:arg.medecin}).then(res=>{
+              console.log(res)
+            })
+
+          }
+        })
+      }
+    })
+  }
   async presentAlert1(arg) {
     const alert = await this.alertController.create({
       header: arg.nom+" "+arg.dose,
@@ -324,7 +331,13 @@ export class SuiviPatientPage implements OnInit {
           type:"radio",
           value:"stopHeparine"
         },
-          
+        {
+          name: 'restartHeparine',
+          label: 'Reprendre Heparine',
+          type:"radio",
+          value:"restartHeparine"
+        },
+        
         ],
         buttons: [ {
           text: 'Valider',
@@ -361,7 +374,21 @@ export class SuiviPatientPage implements OnInit {
 
       await alert.present();
     }
+    maintenirLaDoseHeparine(arg){
+      this._serviceIcoeur.UpdateHeparine({nom:arg.nom,heure_prise:arg.heure_prise,dose:arg.dose,id:arg.id}).then(res=>{
+        if(res['status']){
+          this._serviceIcoeur.getLastTpInr({patient:arg.patient}).then(res =>{
+            if(res['status'] == true){
+              let rep  =res['Message'];
+              this._serviceIcoeur.createHistoriqueHeparine({type:"Heparine",nom:arg.nom,heure_prise:arg.heure_prise,dose:arg.dose,inr:rep.inr,date_debut_prise:arg.date_debut_prise,date_fin_prise:arg.date_fin_prise,patient:arg.patient,medecin:arg.medecin}).then(res=>{
+                console.log(res)
+              })
 
+            }
+          })
+        }
+      })
+    }
     calculateDate(dateNaissance){
       //console.log(dateNaissance)
       var diff = Date.now() - new Date(dateNaissance).getTime();
@@ -375,8 +402,42 @@ export class SuiviPatientPage implements OnInit {
     heparine:any;
     isDone:boolean = false;
     image:any =null;
-
     async addTraitement() {
+
+      const alert = await this.alertController.create({
+        header: 'Ajout Traitement',
+        inputs: [
+          {
+            name: 'nom',
+            placeholder: 'Nom'
+          },
+          {
+            name: 'dose',
+            placeholder: 'Dose',
+            type: 'text'
+          },
+          {
+            name: 'posologie',
+            placeholder: 'Posologie',
+            type: 'text'
+          }
+        ],
+        buttons: [ {
+          text: 'Valider',
+          cssClass: 'success',
+          handler: data=> {
+           
+            console.log(data);
+            this.insertTraitement(data)
+            //this.router.navigate(['/login']);
+            }
+        }]
+      });
+  
+      await alert.present();
+      
+    }
+   /* async addTraitement() {
 
       const alert = await this.alertController.create({
         header: 'Ajout Traitement',
@@ -409,7 +470,7 @@ export class SuiviPatientPage implements OnInit {
   
       await alert.present();
       
-    }
+    }*/
     insertTraitement(data){
       this._serviceIcoeur.addTraitement({nom:data.nom,dose:data.dose,posologie:data.posologie,patient:localStorage.getItem('idPatient'),medecin:JSON.parse(localStorage.getItem('currentUser')).id}).then(res=>{
         if(res['status'] == true){
@@ -560,5 +621,112 @@ export class SuiviPatientPage implements OnInit {
      }
    })
   }
+  async insertTpINR() {
 
+    const alert = await this.alertController.create({
+      header: 'Ajout TP/INR',
+      inputs: [
+        {
+          name: 'tp',
+          placeholder: 'TP'
+        },
+        {
+          name: 'inr',
+          placeholder: 'INR',
+          type: 'text'
+        }
+      ],
+      buttons: [ {
+        text: 'Valider',
+        cssClass: 'success',
+        handler: data=> {
+         
+          console.log(data.tp+' '+data.inr);
+          this.addTpINR(data)
+          //this.router.navigate(['/login']);
+          }
+      }]
+    });
+
+    await alert.present();
+    
+  }
+  /*sync insertTpINR() {
+
+    const alert = await this.alertController.create({
+      header: 'Ajout TP/INR',
+      inputs: [
+        {
+          name: 'tp',
+          placeholder: 'TP'
+        },
+        {
+          name: 'inr',
+          placeholder: 'INR',
+        }
+       
+      ],
+      buttons: [ {
+        text: 'Valider',
+        role: 'cancel',
+        cssClass: 'success',
+        handler: data=> {
+          console.log(data)
+          this.addTpINR(data)
+          //this.valider()
+           // this.gestesliste.gestesliste = this.gesteAutre
+          //this.router.navigate(['/login']);
+          }
+      }]
+    });
+
+    await alert.present();
+    
+  }*/
+
+  isTpinr
+  async addTpINR(data) {
+    console.log(data)
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+      //duration: 2000
+      showBackdrop: true,
+      id: 'login'
+    });
+
+    await loading.present();
+    setTimeout(() => {
+
+      this._serviceIcoeur.createTpInr({tp:data.tp,inr:data.inr,dateProChainTpInr:((new Date()).toJSON()).split("T",2)[0],patient:localStorage.getItem('idPatient')}).then(res =>{
+        console.log(res['Message'])
+        if(res['status'] != false){
+          loading.dismiss();
+          this._serviceIcoeur.onUserUpdate({id:localStorage.getItem('idPatient'),new:1}).then(resp=>{
+            if(resp['status'] == true){
+              this.pinErrorAlert(res['Message'])
+
+              //this.datePrechainTpInr =undefined;
+                        
+              this._serviceIcoeur.getAllTpInr(localStorage.getItem('idPatient')).then(res =>{
+                if(res['status'] != false){
+                  this.inrHistorique = res['Message']
+                  this.isTpinr = true
+                }else{
+                  console.log('pas de reponse');
+                }
+              })
+            }
+          })
+          
+        }else{
+          loading.dismiss();
+          this.pinErrorAlert(res['Message'])
+        }
+      })
+  
+    }, 5000);
+    
+   // const { role, data } = await loading.onDidDismiss();
+   //loading.dismiss();
+  }
 }
